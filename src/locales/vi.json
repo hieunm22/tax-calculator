@@ -1,0 +1,108 @@
+{
+	"constant": {
+		"is-required": "bắt buộc nhập"
+	},
+	"home": {
+		"header": {
+			"label": "Bảng tính thuế TNCN"
+		},
+		"income": {
+			"label": "Thu nhập",
+			"placeholder": "Nhập thu nhập"
+		},
+		"dependents": {
+			"label": "Số người phụ thuộc",
+			"placeholder": "Nhập số người phụ thuộc"
+		},
+		"contribution-level": {
+			"label": "Mức lương đóng bảo hiểm",
+			"offical": "Trên lương chính thức",
+			"other": "Khác"
+		},
+		"contribution-amount": {
+			"label": "Mức lương đóng bảo hiểm",
+			"placeholder": "Nhập mức lương đóng bảo hiểm"
+		},
+		"calculate-button": {
+			"label": "Tính thuế"
+		},
+		"setting-button": {
+			"label": "Cài đặt"
+		},
+		"answer": {
+			"no-tax": "Thu nhập tính thuế của bạn < 0, chưa đến mức phải nộp thuế"
+		}
+	},
+	"setting": {
+		"header": {
+			"label": "Cài đặt"
+		},
+		"language": {
+			"label": "Ngôn ngữ"
+		},
+		"darkmode": {
+			"label": "Chế độ tối"
+		},
+		"btn-close": {
+			"label": "Đóng"
+		}
+	},
+	"config": {
+		"personal-deduction": {
+			"label": "Giảm trừ cá nhân",
+			"placeholder": "Nhập giảm trừ cá nhân"
+		},
+		"dependants-deduction": {
+			"label": "Giảm trừ người phụ thuộc",
+			"placeholder": "Nhập giảm trừ người phụ thuộc"
+		},
+		"tax-step-1": {
+			"label": "Biểu thuế mức 1"
+		},
+		"tax-rate-1": {
+			"label": "Tỷ suất thuế mức 1"
+		},
+		"tax-step-2": {
+			"label": "Biểu thuế mức 2"
+		},
+		"tax-rate-2": {
+			"label": "Tỷ suất thuế mức 2"
+		},
+		"tax-step-3": {
+			"label": "Biểu thuế mức 3"
+		},
+		"tax-rate-3": {
+			"label": "Tỷ suất thuế mức 3"
+		},
+		"tax-step-4": {
+			"label": "Biểu thuế mức 4"
+		},
+		"tax-rate-4": {
+			"label": "Tỷ suất thuế mức 4"
+		},
+		"tax-step-5": {
+			"label": "Biểu thuế mức 5"
+		},
+		"tax-rate-5": {
+			"label": "Tỷ suất thuế mức 5"
+		},
+		"tax-step-6": {
+			"label": "Biểu thuế mức 6"
+		},
+		"tax-rate-6": {
+			"label": "Tỷ suất thuế mức 6"
+		},
+		"tax-step-7": {
+			"label": "Biểu thuế mức 7"
+		},
+		"tax-rate-7": {
+			"label": "Tỷ suất thuế mức 7"
+		},
+		"save": {
+			"label": "Lưu"
+		},
+		"close": {
+			"label": "Đóng"
+		}
+	}
+}

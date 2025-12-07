@@ -1,0 +1,39 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"baseUrl": "src",
+		"paths": {
+			"@/*": ["*"],
+			"assets/*": ["assets/*"],
+			"common/*": ["common/*"],
+			"components/*": ["components/*"],
+			"hooks/*": ["hooks/*"],
+			"locales/*": ["locales/*"],
+			"pages/*": ["pages/*"],
+			"toolkit/*": ["toolkit/*"],
+			"types/*": ["types/*"]
+		},
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"types": ["vitest/globals"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "es2022",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx"
+	},
+	"include": [
+		"src",
+		"vite.config.ts",
+		"src/types/global.d.ts",
+		"src/types/assets.d.ts",
+		"src/vite-plugin-eslint.d.ts"
+	]
+}

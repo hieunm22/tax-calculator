@@ -1,0 +1,108 @@
+{
+	"constant": {
+		"is-required": "必須"
+	},
+	"home": {
+		"header": {
+			"label": "個人所得税計算機"
+		},
+		"income": {
+			"label": "収入",
+			"placeholder": "収入を入力"
+		},
+		"dependents": {
+			"label": "扶養家族",
+			"placeholder": "扶養家族を入力"
+		},
+		"contribution-level": {
+			"label": "拠出額",
+			"offical": "公務員給与",
+			"other": "その他"
+		},
+		"contribution-amount": {
+			"label": "拠出額",
+			"placeholder": "拠出額を入力"
+		},
+		"calculate-button": {
+			"label": "計算"
+		},
+		"setting-button": {
+			"label": "設定"
+		},
+		"answer": {
+			"no-tax": "課税所得 < 0、まだ課税対象外です"
+		}
+	},
+	"setting": {
+		"header": {
+			"label": "設定"
+		},
+		"language": {
+			"label": "言語"
+		},
+		"darkmode": {
+			"label": "ダークモード"
+		},
+		"btn-close": {
+			"label": "閉じる"
+		}
+	},
+	"config": {
+		"personal-deduction": {
+			"label": "個人控除",
+			"placeholder": "個人控除を入力"
+		},
+		"dependants-deduction": {
+			"label": "扶養控除",
+			"placeholder": "扶養控除を入力"
+		},
+		"tax-step-1": {
+			"label": "税率表 レベル1"
+		},
+		"tax-rate-1": {
+			"label": "税率 レベル1"
+		},
+		"tax-step-2": {
+			"label": "税率 レベル2"
+		},
+		"tax-rate-2": {
+			"label": "税率 レベル2"
+		},
+		"tax-step-3": {
+			"label": "税率 レベル3"
+		},
+		"tax-rate-3": {
+			"label": "税率 レベル3"
+		},
+		"tax-step-4": {
+			"label": "税率 レベル4"
+		},
+		"tax-rate-4": {
+			"label": "税率 レベル4"
+		},
+		"tax-step-5": {
+			"label": "税率 レベル5"
+		},
+		"tax-rate-5": {
+			"label": "税率 レベル5"
+		},
+		"tax-step-6": {
+			"label": "税率 レベル6"
+		},
+		"tax-rate-6": {
+			"label": "税率 レベル6"
+		},
+		"tax-step-7": {
+			"label": "税率 レベル7"
+		},
+		"tax-rate-7": {
+			"label": "税率 レベル7"
+		},
+		"save": {
+			"label": "保存"
+		},
+		"close": {
+			"label": "閉じる"
+		}
+	}
+}

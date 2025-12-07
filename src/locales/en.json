@@ -1,0 +1,108 @@
+{
+	"constant": {
+		"is-required": "is required"
+	},
+	"home": {
+		"header": {
+			"label": "Personal tax calculator"
+		},
+		"income": {
+			"label": "Income",
+			"placeholder": "Enter income"
+		},
+		"dependents": {
+			"label": "Dependents",
+			"placeholder": "Enter dependents"
+		},
+		"contribution-level": {
+			"label": "Contribution level",
+			"offical": "On offical salary",
+			"other": "Other"
+		},
+		"contribution-amount": {
+			"label": "Contribution amount",
+			"placeholder": "Enter contribution amount"
+		},
+		"calculate-button": {
+			"label": "Calculate tax"
+		},
+		"setting-button": {
+			"label": "Setting"
+		},
+		"answer": {
+			"no-tax": "Your taxable income is negative, no need to pay tax"
+		}
+	},
+	"setting": {
+		"header": {
+			"label": "Setting"
+		},
+		"language": {
+			"label": "Language"
+		},
+		"darkmode": {
+			"label": "Dark mode"
+		},
+		"btn-close": {
+			"label": "Close"
+		}
+	},
+	"config": {
+		"personal-deduction": {
+			"label": "Personal deduction",
+			"placeholder": "Enter personal deduction"
+		},
+		"dependants-deduction": {
+			"label": "Dependants deduction",
+			"placeholder": "Enter dependants deduction"
+		},
+		"tax-step-1": {
+			"label": "Tax rate level 1"
+		},
+		"tax-rate-1": {
+			"label": "Tax rate level 1"
+		},
+		"tax-step-2": {
+			"label": "Tax rate level 2"
+		},
+		"tax-rate-2": {
+			"label": "Tax rate level 2"
+		},
+		"tax-step-3": {
+			"label": "Tax rate level 3"
+		},
+		"tax-rate-3": {
+			"label": "Tax rate level 3"
+		},
+		"tax-step-4": {
+			"label": "Tax rate level 4"
+		},
+		"tax-rate-4": {
+			"label": "Tax rate level 4"
+		},
+		"tax-step-5": {
+			"label": "Tax rate level 5"
+		},
+		"tax-rate-5": {
+			"label": "Tax rate level 5"
+		},
+		"tax-step-6": {
+			"label": "Tax rate level 6"
+		},
+		"tax-rate-6": {
+			"label": "Tax rate level 6"
+		},
+		"tax-step-7": {
+			"label": "Tax rate level 7"
+		},
+		"tax-rate-7": {
+			"label": "Tax rate level 7"
+		},
+		"save": {
+			"label": "Save"
+		},
+		"close": {
+			"label": "Close"
+		}
+	}
+}
