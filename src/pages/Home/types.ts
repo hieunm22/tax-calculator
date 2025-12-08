@@ -18,5 +18,10 @@ interface TaxStep {
 export interface TaxConfig {
 	personalDeduction: number
 	dependantsDeduction: number
+	insuranceRate: number
 	taxSteps: TaxStep[]
+}
+
+export interface UpdateTaxConfig {
+	handleUpdateConfig: (config: TaxConfig) => void
 }

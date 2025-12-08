@@ -35,6 +35,7 @@ export const LS_TAX_CONFIG = "tax-config"
 export const INIT_TAX_CONFIG: TaxConfig = {
 	personalDeduction: 9000000,
 	dependantsDeduction: 3600000,
+	insuranceRate: 0.105,
 	taxSteps: [
 		{ max: 5000000, rate: 0.05 },
 		{ max: 10000000, rate: 0.1 },
@@ -42,6 +43,6 @@ export const INIT_TAX_CONFIG: TaxConfig = {
 		{ max: 32000000, rate: 0.2 },
 		{ max: 52000000, rate: 0.25 },
 		{ max: 80000000, rate: 0.3 },
-		{ max: Infinity, rate: 0.35 }
+		{ max: 2000000000, rate: 0.35 }
 	]
 }

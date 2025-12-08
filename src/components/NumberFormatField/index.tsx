@@ -1,9 +1,9 @@
 import React from "react"
-import { TextField } from "@mui/material"
+import { TextField, TextFieldProps } from "@mui/material"
 import { translate } from "../../locales/translate"
 import type { NumberFormatProps } from "./types"
 
-export default function NumberFormatField(props: NumberFormatProps) {
+export default function NumberFormatField(props: NumberFormatProps & TextFieldProps) {
 	const [displayValue, setDisplayValue] = React.useState("")
 	const [helpText, setHelpText] = React.useState("")
 	const [realValue, setRealValue] = React.useState("")
@@ -26,7 +26,7 @@ export default function NumberFormatField(props: NumberFormatProps) {
 		const formatValue = formatNumber(Number(realValue))
 		setDisplayValue(formatValue)
 		setHelpText(!realValue ? "constant.is-required" : "")
-		props.handleUpdate(realValue)
+		props.handleUpdate && props.handleUpdate(realValue)
 	}
 
 	const unformat = (val: string) => val.replace(/\D/g, "")

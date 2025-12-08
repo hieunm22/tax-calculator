@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
 import { Box, Dialog, DialogContent, DialogTitle, Divider } from "@mui/material"
 import { INIT_TAX_CONFIG, LS_LANGUAGE, LS_TAX_CONFIG } from "common/constants"
-import { TButton } from "@/components/TranslationTag"
+import { TButton, TTextField } from "@/components/TranslationTag"
 import NumberFormatField from "@/components/NumberFormatField"
 import { translate } from "locales/translate"
 import i18n from "locales/i18n"
 import useToolkit from "hooks/useToolkit"
 import { showPopup } from "toolkit/slice"
-import { TaxConfig } from "./types"
+import { TaxConfig, UpdateTaxConfig } from "./types"
 
-export const Settings = () => {
+export const Settings = (props: UpdateTaxConfig) => {
 	const { state, dispatch } = useToolkit()
 	const [configData, setConfigData] = useState<TaxConfig>(INIT_TAX_CONFIG)
 
@@ -33,7 +33,6 @@ export const Settings = () => {
 		const clone = structuredClone(configData)
 		if (field === "personalDeduction") {
 			clone.personalDeduction = +value
-			console.log("clone.personalDeduction :>> ", clone.personalDeduction)
 		} else if (field === "dependantsDeduction") {
 			clone.dependantsDeduction = +value
 		} else if (field.startsWith("taxSteps")) {
@@ -62,6 +61,7 @@ export const Settings = () => {
 
 	const handleSave = () => {
 		localStorage.setItem(LS_TAX_CONFIG, JSON.stringify(configData))
+		props.handleUpdateConfig(configData)
 		dispatch(showPopup(0))
 	}
 
@@ -93,6 +93,15 @@ export const Settings = () => {
 					placeholder="config.dependants-deduction.placeholder"
 					end="₫"
 					handleUpdate={handleChange("dependantsDeduction")}
+				/>
+				<TTextField
+					fullWidth
+					type="text"
+					label="config.insurance-rate.label"
+					value={configData.insuranceRate}
+					size="small"
+					variant="standard"
+					slotProps={{ htmlInput: { disabled: true } }}
 				/>
 
 				<Divider sx={{ my: "20px" }} />

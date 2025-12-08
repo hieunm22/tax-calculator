@@ -1,6 +1,7 @@
+import type { JSX } from "react"
 import type { Theme } from "@emotion/react"
 import type { SxProps } from "@mui/material"
-import type { JSX } from "react"
+import { StringChanged } from "@/types/Common"
 
 export interface NumberFormatProps {
 	fullWidth?: boolean
@@ -9,5 +10,5 @@ export interface NumberFormatProps {
 	sx?: SxProps<Theme>
 	placeholder?: string
 	end: JSX.Element | string
-	handleUpdate: (str: string) => void
+	handleUpdate?: StringChanged
 }

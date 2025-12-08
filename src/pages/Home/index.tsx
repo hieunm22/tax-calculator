@@ -7,6 +7,7 @@ import {
 	Radio,
 	Paper
 } from "@mui/material"
+import { INIT_TAX_CONFIG, LS_TAX_CONFIG } from "@/common/constants"
 import { INSURANCE_RATE } from "./constants"
 import NumberFormatField from "@/components/NumberFormatField"
 import { TButton, TTypography } from "@/components/TranslationTag"
@@ -16,7 +17,6 @@ import { showPopup } from "@/toolkit/slice"
 import useToolkit from "@/hooks/useToolkit"
 import type { TaxConfig, TaxFormData } from "./types"
 import "./Home.scss"
-import { INIT_TAX_CONFIG, LS_TAX_CONFIG } from "@/common/constants"
 
 export default function Home() {
 	const { dispatch } = useToolkit()
@@ -101,9 +101,10 @@ export default function Home() {
 
 		alert(
 			`Thu nhập chịu thuế của bạn là: ${taxableIncome.toLocaleString()} ₫
+mức bảo hiểm đã đóng là: ${(contributionAmount * INSURANCE_RATE).toLocaleString()} ₫
 bạn thuộc mức thuế suất ${rate * 100}%
 số thuế phải nộp là: ${totalTax.toLocaleString()} ₫
-net income của bạn là : ${(totalIncome - totalTax).toLocaleString()} ₫`
+net income của bạn là : ${(totalIncome - contributionAmount * INSURANCE_RATE - totalTax).toLocaleString()} ₫`
 		)
 	}
 
@@ -192,7 +193,7 @@ net income của bạn là : ${(totalIncome - totalTax).toLocaleString()} ₫`
 					value="home.setting-button.label"
 				/>
 			</Box>
-			<Settings />
+			<Settings handleUpdateConfig={setTaxConfig} />
 		</Paper>
 	)
 }

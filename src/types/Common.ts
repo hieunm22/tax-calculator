@@ -7,4 +7,5 @@ export interface ReduxStore {
 
 export type InputChanged = (e: ChangeEvent<HTMLInputElement>) => void
 export type NumberChanged = (num: number) => void
+export type StringChanged = (str: string) => void
 export type EmptyVoid = () => void
