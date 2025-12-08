@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react"
-import { Box, Dialog, DialogContent, DialogTitle, Divider } from "@mui/material"
+import {
+	Box,
+	Dialog,
+	DialogContent,
+	DialogTitle,
+	Divider,
+	FormControlLabel
+} from "@mui/material"
 import { INIT_TAX_CONFIG, LS_LANGUAGE, LS_TAX_CONFIG } from "common/constants"
-import { TButton, TTextField } from "@/components/TranslationTag"
-import NumberFormatField from "@/components/NumberFormatField"
+import { TButton, TSpan, TTypography } from "components/TranslationTag"
+import NumberFormatField from "components/NumberFormatField"
 import { translate } from "locales/translate"
 import i18n from "locales/i18n"
 import useToolkit from "hooks/useToolkit"
@@ -71,6 +78,11 @@ export const Settings = (props: UpdateTaxConfig) => {
 		}
 	}
 
+	const insuranceBase =
+		configData.minimumInsuranceBase.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+		" ₫"
+	const insuranceRate = configData.insuranceRate * 100 + " %"
+
 	return (
 		<Dialog open={state.activePopup === 1} onClose={handleClose}>
 			<DialogTitle padding="5px 20px !important" width={350}>
@@ -83,6 +95,7 @@ export const Settings = (props: UpdateTaxConfig) => {
 					value={configData.personalDeduction}
 					label="config.personal-deduction.label"
 					placeholder="config.personal-deduction.placeholder"
+					sx={{ mb: 1 }}
 					end="₫"
 					handleUpdate={handleChange("personalDeduction")}
 				/>
@@ -91,22 +104,39 @@ export const Settings = (props: UpdateTaxConfig) => {
 					value={configData.dependantsDeduction}
 					label="config.dependants-deduction.label"
 					placeholder="config.dependants-deduction.placeholder"
+					sx={{ mb: 1 }}
 					end="₫"
 					handleUpdate={handleChange("dependantsDeduction")}
 				/>
-				<TTextField
-					fullWidth
-					type="text"
-					label="config.insurance-rate.label"
-					value={configData.insuranceRate}
-					size="small"
-					variant="standard"
-					slotProps={{ htmlInput: { disabled: true } }}
+				<FormControlLabel
+					label={
+						<TSpan className="label-constant" content="config.minimum-insurance.label" />
+					}
+					labelPlacement="start"
+					control={
+						<TTypography
+							sx={{ ml: 2, color: "text.secondary" }}
+							content={insuranceBase}
+						/>
+					}
+					sx={{ mb: 1 }}
+				/>
+				<br />
+				<FormControlLabel
+					label={
+						<TSpan className="label-constant" content="config.insurance-rate.label" />
+					}
+					labelPlacement="start"
+					control={
+						<TTypography
+							sx={{ ml: 2, color: "text.secondary" }}
+							content={insuranceRate}
+						/>
+					}
+					sx={{ mb: 1 }}
 				/>
 
-				<Divider sx={{ my: "20px" }} />
-
-				<Box sx={{ mb: 3 }}>
+				<Box sx={{ mb: 2 }}>
 					{configData.taxSteps.map((step, index) => (
 						<Box key={index} sx={{ display: "flex", justifyContent: "space-arround" }}>
 							<NumberFormatField
@@ -116,6 +146,7 @@ export const Settings = (props: UpdateTaxConfig) => {
 								end="₫"
 								handleUpdate={handleChange(`taxSteps[${index + 1}].max`)}
 							/>
+							&nbsp;&nbsp;
 							<NumberFormatField
 								value={step.rate * 100}
 								label={`config.tax-rate-${index + 1}.label`}
@@ -123,7 +154,9 @@ export const Settings = (props: UpdateTaxConfig) => {
 								end="%"
 								handleUpdate={handleChange(`taxSteps[${index + 1}].rate`)}
 							/>
-							<i className="fas fa-times" onClick={() => handleRemoveStep(index)} />
+							<div className="remove-step">
+								<i className="fas fa-times icon" onClick={() => handleRemoveStep(index)} />
+							</div>
 						</Box>
 					))}
 				</Box>

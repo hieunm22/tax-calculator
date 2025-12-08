@@ -7,29 +7,32 @@ import {
 	Radio,
 	Paper
 } from "@mui/material"
-import { INIT_TAX_CONFIG, LS_TAX_CONFIG } from "@/common/constants"
+import { INIT_TAX_CONFIG, LS_TAX_CONFIG } from "common/constants"
 import { INSURANCE_RATE } from "./constants"
-import NumberFormatField from "@/components/NumberFormatField"
-import { TButton, TTypography } from "@/components/TranslationTag"
+import NumberFormatField from "components/NumberFormatField"
+import { TButton, TTypography } from "components/TranslationTag"
 import { Settings } from "./components"
-import { translate } from "@/locales/translate"
-import { showPopup } from "@/toolkit/slice"
-import useToolkit from "@/hooks/useToolkit"
+import { translate } from "locales/translate"
+import { showPopup } from "toolkit/slice"
+import useToolkit from "hooks/useToolkit"
+import { useAlert } from "components/AlertProvider"
 import type { TaxConfig, TaxFormData } from "./types"
 import "./Home.scss"
 
 export default function Home() {
 	const { dispatch } = useToolkit()
+	const alertPopup = useAlert()
 	const [formData, setFormData] = useState<TaxFormData>({
 		income: "",
 		dependents: "",
-		contributionLevel: "official",
+		contributionLevel: "other",
 		contributionAmount: ""
 	})
-	const [taxConfig, setTaxConfig] = useState<TaxConfig>({} as TaxConfig)
+	const [taxConfig, setTaxConfig] = useState<TaxConfig>(INIT_TAX_CONFIG)
 
 	useEffect(() => {
 		const taxConfigStr = localStorage.getItem(LS_TAX_CONFIG)
+		document.title = translate("home.header.label")
 		if (taxConfigStr) {
 			setTaxConfig(JSON.parse(taxConfigStr))
 		} else {
@@ -62,7 +65,7 @@ export default function Home() {
 		dispatch(showPopup(1))
 	}
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		// prepare data
 		const formNumbers = Object.values(formData)
 			.map(Number)
@@ -77,7 +80,7 @@ export default function Home() {
 			dependents * taxConfig.dependantsDeduction
 
 		if (taxableIncome <= 0) {
-			alert(translate("home.answer.no-tax"))
+			await alertPopup(translate("home.answer.no-tax"))
 			return
 		}
 
@@ -99,7 +102,7 @@ export default function Home() {
 
 		const totalTax = Math.round(tax)
 
-		alert(
+		await alertPopup(
 			`Thu nhập chịu thuế của bạn là: ${taxableIncome.toLocaleString()} ₫
 mức bảo hiểm đã đóng là: ${(contributionAmount * INSURANCE_RATE).toLocaleString()} ₫
 bạn thuộc mức thuế suất ${rate * 100}%
@@ -109,18 +112,10 @@ net income của bạn là : ${(totalIncome - contributionAmount * INSURANCE_RAT
 	}
 
 	return (
-		<Paper sx={{ px: 4, py: 2, width: "100%" }}>
-			<TTypography
-				variant="h5"
-				sx={{ display: "flex", justifyContent: "center", mb: 4, fontWeight: 600 }}
-				content="home.header.label"
-			/>
+		<Paper className="main-content">
+			<TTypography variant="h5" className="header" content="home.header.label" />
 
-			<Box
-				sx={{
-					display: "flex"
-				}}
-			>
+			<Box sx={{ display: "flex" }}>
 				<Box width="100%">
 					<NumberFormatField
 						fullWidth
@@ -151,11 +146,6 @@ net income của bạn là : ${(totalIncome - contributionAmount * INSURANCE_RAT
 						value={formData.contributionLevel}
 						onChange={handleChangeRadio("contributionLevel")}
 					>
-						<FormControlLabel
-							value="official"
-							control={<Radio />}
-							label={translate("home.contribution-level.offical")}
-						/>
 						<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
 							<FormControlLabel
 								value="other"
@@ -172,6 +162,11 @@ net income của bạn là : ${(totalIncome - contributionAmount * INSURANCE_RAT
 								/>
 							)}
 						</Box>
+						<FormControlLabel
+							value="official"
+							control={<Radio />}
+							label={translate("home.contribution-level.official")}
+						/>
 					</RadioGroup>
 				</FormControl>
 			</Box>

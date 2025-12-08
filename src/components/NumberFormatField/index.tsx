@@ -45,6 +45,7 @@ export default function NumberFormatField(props: NumberFormatProps & TextFieldPr
 			fullWidth={props.fullWidth}
 			required
 			type="text"
+			disabled={props.disabled}
 			label={translate(props.label)}
 			placeholder={translate(props.placeholder)}
 			value={displayValue}

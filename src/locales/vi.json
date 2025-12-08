@@ -16,18 +16,21 @@
 		},
 		"contribution-level": {
 			"label": "Mức lương đóng bảo hiểm",
-			"offical": "Trên lương chính thức",
+			"official": "Trên lương chính thức",
 			"other": "Khác"
 		},
 		"contribution-amount": {
 			"label": "Mức lương đóng bảo hiểm",
-			"placeholder": "Nhập mức lương đóng bảo hiểm"
+			"placeholder": "Nhập mức lương bảo hiểm"
 		},
 		"calculate-button": {
 			"label": "Tính thuế"
 		},
 		"setting-button": {
 			"label": "Cài đặt"
+		},
+		"alert": {
+			"title": "Thông báo"
 		},
 		"answer": {
 			"no-tax": "Thu nhập tính thuế của bạn < 0, chưa đến mức phải nộp thuế"
@@ -55,6 +58,12 @@
 		"dependants-deduction": {
 			"label": "Giảm trừ người phụ thuộc",
 			"placeholder": "Nhập giảm trừ người phụ thuộc"
+		},
+		"insurance-rate": {
+			"label": "Tỷ lệ đóng bảo hiểm"
+		},
+		"minimum-insurance": {
+			"label": "Mức lương tối thiểu"
 		},
 		"tax-step-1": {
 			"label": "Biểu thuế mức 1"

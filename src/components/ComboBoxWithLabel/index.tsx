@@ -10,6 +10,7 @@ import {
 import { translate } from "../../locales/translate"
 import TranslationText from "../../components/TranslationText"
 import { ComboBoxWithLabelProps } from "./types"
+import "./ComboBoxWithLabel.scss"
 
 export const ComboBoxWithLabel = (props: ComboBoxWithLabelProps) => {
 	const [value, setValue] = useState("")

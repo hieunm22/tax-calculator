@@ -15,6 +15,7 @@ import { setDarkMode } from "toolkit/slice"
 import i18n from "locales/i18n"
 import { translate } from "locales/translate"
 import useToolkit from "hooks/useToolkit"
+import "./Navbar.scss"
 
 const Navbar = () => {
 	const [language, changeLanguage] = useState("en")

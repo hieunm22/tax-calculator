@@ -19,6 +19,7 @@ export interface TaxConfig {
 	personalDeduction: number
 	dependantsDeduction: number
 	insuranceRate: number
+	minimumInsuranceBase: number
 	taxSteps: TaxStep[]
 }
 

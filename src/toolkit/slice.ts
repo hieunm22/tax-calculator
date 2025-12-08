@@ -1,5 +1,5 @@
 /* eslint-disable max-lines, max-len */
-import { ReduxState } from "@/types/ReduxState"
+import { ReduxState } from "types/ReduxState"
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState: ReduxState = {

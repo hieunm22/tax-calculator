@@ -1,4 +1,4 @@
-import { TaxConfig } from "@/pages/Home/types"
+import { TaxConfig } from "pages/Home/types"
 
 export const COUNTRIES_DROPDOWN = [
 	{
@@ -36,6 +36,7 @@ export const INIT_TAX_CONFIG: TaxConfig = {
 	personalDeduction: 9000000,
 	dependantsDeduction: 3600000,
 	insuranceRate: 0.105,
+	minimumInsuranceBase: 5310000,
 	taxSteps: [
 		{ max: 5000000, rate: 0.05 },
 		{ max: 10000000, rate: 0.1 },

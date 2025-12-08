@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import { createTheme, CssBaseline, ThemeProvider, type PaletteMode } from "@mui/material"
 import { LS_DARKMODE } from "./common/constants"
+import { AlertProvider } from "./components/AlertProvider"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./pages/Home"
 
@@ -48,7 +49,14 @@ function App() {
 			<Router>
 				<Routes>
 					<Route element={<PublicRoute />}>
-						<Route path="/" element={<Home />} />
+						<Route
+							path="/"
+							element={
+								<AlertProvider>
+									<Home />
+								</AlertProvider>
+							}
+						/>
 					</Route>
 				</Routes>
 			</Router>

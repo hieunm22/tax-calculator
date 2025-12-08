@@ -16,18 +16,21 @@
 		},
 		"contribution-level": {
 			"label": "拠出額",
-			"offical": "公務員給与",
+			"official": "公務員給与",
 			"other": "その他"
 		},
 		"contribution-amount": {
 			"label": "拠出額",
-			"placeholder": "拠出額を入力"
+			"placeholder": "寄付金額を入力してください"
 		},
 		"calculate-button": {
 			"label": "計算"
 		},
 		"setting-button": {
 			"label": "設定"
+		},
+		"alert": {
+			"title": "通知"
 		},
 		"answer": {
 			"no-tax": "課税所得 < 0、まだ課税対象外です"
@@ -56,47 +59,53 @@
 			"label": "扶養控除",
 			"placeholder": "扶養控除を入力"
 		},
+		"insurance-rate": {
+			"label": "保険料率"
+		},
+		"minimum-insurance": {
+			"label": "最低保険基盤"
+		},
 		"tax-step-1": {
-			"label": "税率表 レベル1"
+			"label": "税段階レベル 1"
 		},
 		"tax-rate-1": {
-			"label": "税率 レベル1"
+			"label": "税率レベル 1"
 		},
 		"tax-step-2": {
-			"label": "税率 レベル2"
+			"label": "税段階レベル 2"
 		},
 		"tax-rate-2": {
-			"label": "税率 レベル2"
+			"label": "税率レベル 2"
 		},
 		"tax-step-3": {
-			"label": "税率 レベル3"
+			"label": "税段階レベル 3"
 		},
 		"tax-rate-3": {
-			"label": "税率 レベル3"
+			"label": "税率レベル 3"
 		},
 		"tax-step-4": {
-			"label": "税率 レベル4"
+			"label": "税段階レベル 4"
 		},
 		"tax-rate-4": {
-			"label": "税率 レベル4"
+			"label": "税率レベル 4"
 		},
 		"tax-step-5": {
-			"label": "税率 レベル5"
+			"label": "税率レベル 5"
 		},
 		"tax-rate-5": {
-			"label": "税率 レベル5"
+			"label": "税率レベル 5"
 		},
 		"tax-step-6": {
-			"label": "税率 レベル6"
+			"label": "税段階レベル 6"
 		},
 		"tax-rate-6": {
-			"label": "税率 レベル6"
+			"label": "税率レベル 6"
 		},
 		"tax-step-7": {
-			"label": "税率 レベル7"
+			"label": "税段階レベル 7"
 		},
 		"tax-rate-7": {
-			"label": "税率 レベル7"
+			"label": "税率レベル 7"
 		},
 		"save": {
 			"label": "保存"
