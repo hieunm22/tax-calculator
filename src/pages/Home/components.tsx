@@ -73,8 +73,7 @@ export const Settings = (props: UpdateTaxConfig) => {
 	}
 
 	const handleReset = () => {
-		localStorage.setItem(LS_TAX_CONFIG, JSON.stringify(INIT_TAX_CONFIG))
-		props.handleUpdateConfig(INIT_TAX_CONFIG)
+		setConfigData(INIT_TAX_CONFIG)
 	}
 
 	const handleClose = (_: any, reason: "backdropClick" | "escapeKeyDown") => {

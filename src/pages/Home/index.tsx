@@ -138,11 +138,11 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 				</Box>
 			</Box>
 
-			<Box sx={{ mb: 4 }}>
+			<Box sx={{ mb: 2 }}>
 				<TTypography
 					content="home.contribution-level.label"
 					variant="subtitle1"
-					sx={{ mb: 2, fontWeight: 500 }}
+					sx={{ mb: 1, fontWeight: 500 }}
 				/>
 				<FormControl component="fieldset">
 					<RadioGroup
@@ -177,11 +177,7 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 			</Box>
 
 			<Box sx={{ mb: 2 }}>
-				<TTypography
-					content="home.target-type.label"
-					variant="subtitle1"
-					sx={{ mb: 2, fontWeight: 500 }}
-				/>
+				<TTypography content="home.target-type.label" variant="subtitle1" />
 				<FormControl component="fieldset">
 					<RadioGroup
 						sx={{ flexDirection: "row" }}
@@ -212,9 +208,7 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 						(formData.contributionLevel === "other" && !formData.contributionAmount)
 					}
 					onClick={formData.targetType === "net" ? submitNet : submitGross}
-					value={translate("home.calculate-button.label").format(
-						formData.targetType.toUpperCase()
-					)}
+					value={formData.targetType === "net" ? "GROSS → NET" : "NET → GROSS"}
 				/>
 				<TButton
 					startIcon={<i className="fa fa-cog" />}
