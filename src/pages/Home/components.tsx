@@ -72,6 +72,11 @@ export const Settings = (props: UpdateTaxConfig) => {
 		dispatch(showPopup(0))
 	}
 
+	const handleReset = () => {
+		localStorage.setItem(LS_TAX_CONFIG, JSON.stringify(INIT_TAX_CONFIG))
+		props.handleUpdateConfig(INIT_TAX_CONFIG)
+	}
+
 	const handleClose = (_: any, reason: "backdropClick" | "escapeKeyDown") => {
 		if (reason === "escapeKeyDown") {
 			dispatch(showPopup(0))
@@ -155,7 +160,10 @@ export const Settings = (props: UpdateTaxConfig) => {
 								handleUpdate={handleChange(`taxSteps[${index + 1}].rate`)}
 							/>
 							<div className="remove-step">
-								<i className="fas fa-times icon" onClick={() => handleRemoveStep(index)} />
+								<i
+									className="fas fa-times icon"
+									onClick={() => handleRemoveStep(index)}
+								/>
 							</div>
 						</Box>
 					))}
@@ -167,6 +175,13 @@ export const Settings = (props: UpdateTaxConfig) => {
 						onClick={handleSave}
 						startIcon={<i className="far fa-save" />}
 						value="config.save.label"
+					/>
+					<TButton
+						variant="outlined"
+						color="info"
+						startIcon={<i className="fas fa-undo" />}
+						onClick={handleReset}
+						value="config.default.label"
 					/>
 					<TButton
 						variant="outlined"

@@ -6,6 +6,7 @@ declare global {
 	}
 
 	interface String {
-		format(...args: any): string
+		format(...args: string[]): string
+		formatWithNumber(...args: number[]): string
 	}
 }

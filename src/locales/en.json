@@ -21,19 +21,34 @@
 		},
 		"contribution-amount": {
 			"label": "Contribution amount",
-			"placeholder": "Enter contribution amount"
+			"placeholder": "At least {0}₫"
+		},
+		"target-type": {
+			"label": "Target salary type",
+			"net": "NET",
+			"gross": "GROSS"
 		},
 		"calculate-button": {
-			"label": "Calculate tax"
+			"label": "Calculate to {0}"
 		},
 		"setting-button": {
-			"label": "Setting"
+			"label": "Tax configuration"
 		},
 		"alert": {
 			"title": "Notification"
 		},
 		"answer": {
 			"no-tax": "Your taxable income is negative, no need to pay tax"
+		},
+		"answer-net": {
+			"row-1": "Paid insurance is {0} ₫",
+			"row-2": "Tax is {0} ₫",
+			"row-3": "Net income is {0} ₫"
+		},
+		"answer-gross": {
+			"row-1": "Paid insurance is {0} ₫",
+			"row-2": "Tax is {0} ₫",
+			"row-3": "Gross income is {0} ₫"
 		}
 	},
 	"setting": {
@@ -109,6 +124,9 @@
 		},
 		"save": {
 			"label": "Save"
+		},
+		"default": {
+			"label": "Reset to default"
 		},
 		"close": {
 			"label": "Close"

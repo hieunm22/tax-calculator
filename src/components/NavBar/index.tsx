@@ -1,5 +1,6 @@
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react"
 import {
+	Box,
 	Button,
 	Dialog,
 	DialogContent,
@@ -14,13 +15,15 @@ import { ComboBoxWithLabel } from "../ComboBoxWithLabel"
 import { setDarkMode } from "toolkit/slice"
 import i18n from "locales/i18n"
 import { translate } from "locales/translate"
+import useAutoTitle from "hooks/useAutoTitle"
 import useToolkit from "hooks/useToolkit"
-import "./Navbar.scss"
+import "./NavBar.scss"
 
 const Navbar = () => {
 	const [language, changeLanguage] = useState("en")
 	const [open, setOpen] = useState(false)
 	const { state, dispatch } = useToolkit()
+	useAutoTitle("home.header.label")
 
 	useEffect(() => {
 		if (open) {
@@ -92,13 +95,15 @@ const Navbar = () => {
 							onChange={toogleDarkMode}
 						/>
 					</Grid>
-					<Button
-						className="btn btn-primary mt-20 center"
-						variant="outlined"
-						onClick={() => setOpen(false)}
-					>
-						{translate("setting.btn-close.label")}
-					</Button>
+					<Box sx={{ display: "flex", justifyContent: "center" }}>
+						<Button
+							className="btn btn-primary mt-20 center"
+							variant="outlined"
+							onClick={() => setOpen(false)}
+						>
+							{translate("setting.btn-close.label")}
+						</Button>
+					</Box>
 				</DialogContent>
 			</Dialog>
 		</>

@@ -5,9 +5,23 @@ import { LS_DARKMODE } from "./common/constants"
 import { AlertProvider } from "./components/AlertProvider"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./pages/Home"
+import useToolkit from "./hooks/useToolkit"
+
+String.prototype.format = function (...args: string[]) {
+	return this.toString().replace(/{(\d+)}/g, (match, index) => {
+		return typeof args[index] !== "undefined" ? args[index] : match
+	})
+}
+
+String.prototype.formatWithNumber = function (...args: number[]) {
+	return this.toString().replace(/{(\d+)}/g, (match, index) => {
+		return typeof args[index] !== "undefined" ? args[index].toLocaleString() : match
+	})
+}
 
 function App() {
 	const darkMode = localStorage.getItem(LS_DARKMODE) || "dark"
+	const { state } = useToolkit()
 
 	const createThemeCallback = () =>
 		createTheme({
@@ -42,7 +56,8 @@ function App() {
 			}
 		})
 
-	const theme = useMemo(createThemeCallback, [])
+	const theme = useMemo(createThemeCallback, [state.darkMode])
+
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />

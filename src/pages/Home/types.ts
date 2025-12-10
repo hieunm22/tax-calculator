@@ -3,14 +3,10 @@ export interface TaxFormData {
 	dependents: string
 	contributionLevel: string
 	contributionAmount: string
+	targetType: string
 }
 
-export interface TaxBracketsProps {
-	max: number
-	rate: number
-}
-
-interface TaxStep {
+export interface TaxStep {
 	max: number
 	rate: number
 }

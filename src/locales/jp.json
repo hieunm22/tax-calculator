@@ -21,19 +21,34 @@
 		},
 		"contribution-amount": {
 			"label": "拠出額",
-			"placeholder": "寄付金額を入力してください"
+			"placeholder": "少なくとも{0}₫"
+		},
+		"target-type": {
+			"label": "目標給与タイプ",
+			"net": "NET",
+			"gross": "GROSS"
 		},
 		"calculate-button": {
-			"label": "計算"
+			"label": "{0} に計算します"
 		},
 		"setting-button": {
-			"label": "設定"
+			"label": "税金の設定"
 		},
 		"alert": {
 			"title": "通知"
 		},
 		"answer": {
 			"no-tax": "課税所得 < 0、まだ課税対象外です"
+		},
+		"answer-net": {
+			"row-1": "支払われた保険料は{0} ₫です",
+			"row-2": "納税額は{0}₫です",
+			"row-3": "純利益は{0}₫です"
+		},
+		"answer-gross": {
+			"row-1": "支払われた保険料は{0} ₫です",
+			"row-2": "納税額は{0}₫です",
+			"row-3": "あなたの総収入は{0} ₫です"
 		}
 	},
 	"setting": {
@@ -109,6 +124,9 @@
 		},
 		"save": {
 			"label": "保存"
+		},
+		"default": {
+			"label": "デフォルトにリセット"
 		},
 		"close": {
 			"label": "閉じる"

@@ -1,6 +1,6 @@
 /* eslint-disable max-lines, max-len */
 import { ReduxState } from "types/ReduxState"
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const initialState: ReduxState = {
 	activePopup: 0,
@@ -12,11 +12,11 @@ const homeSlice = createSlice({
 	name: "home",
 	initialState,
 	reducers: {
-		setDarkMode(state: ReduxState, action: { type: string; payload: boolean }) {
-			state.darkMode = action.payload
+		setDarkMode: (state, body: PayloadAction<boolean>) => {
+			state.darkMode = body.payload
 		},
-		showPopup(state: ReduxState, action: { type: string; payload: number }) {
-			state.activePopup = action.payload
+		showPopup(state: ReduxState, body: PayloadAction<number>) {
+			state.activePopup = body.payload
 		}
 	}
 })

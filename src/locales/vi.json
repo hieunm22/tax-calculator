@@ -21,19 +21,34 @@
 		},
 		"contribution-amount": {
 			"label": "Mức lương đóng bảo hiểm",
-			"placeholder": "Nhập mức lương bảo hiểm"
+			"placeholder": "Tối thiểu {0}₫"
+		},
+		"target-type": {
+			"label": "Lương cần tính",
+			"net": "NET",
+			"gross": "GROSS"
 		},
 		"calculate-button": {
-			"label": "Tính thuế"
+			"label": "Tính lương {0}"
 		},
 		"setting-button": {
-			"label": "Cài đặt"
+			"label": "Cấu hình thuế"
 		},
 		"alert": {
 			"title": "Thông báo"
 		},
 		"answer": {
 			"no-tax": "Thu nhập tính thuế của bạn < 0, chưa đến mức phải nộp thuế"
+		},
+		"answer-net": {
+			"row-1": "Mức bảo hiểm đã đóng là {0}₫",
+			"row-2": "Số thuế phải đóng là {0}₫",
+			"row-3": "Thu nhập Net của bạn là {0} ₫"
+		},
+		"answer-gross": {
+			"row-1": "Mức bảo hiểm đã đóng là {0}₫",
+			"row-2": "Số thuế phải đóng là {0}₫",
+			"row-3": "Thu nhập Gross của bạn là {0} ₫"
 		}
 	},
 	"setting": {
@@ -109,6 +124,9 @@
 		},
 		"save": {
 			"label": "Lưu"
+		},
+		"default": {
+			"label": "Mặc định"
 		},
 		"close": {
 			"label": "Đóng"

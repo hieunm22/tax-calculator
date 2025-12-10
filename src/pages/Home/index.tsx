@@ -8,14 +8,15 @@ import {
 	Paper
 } from "@mui/material"
 import { INIT_TAX_CONFIG, LS_TAX_CONFIG } from "common/constants"
-import { INSURANCE_RATE } from "./constants"
+import { useAlert } from "components/AlertProvider"
 import NumberFormatField from "components/NumberFormatField"
 import { TButton, TTypography } from "components/TranslationTag"
 import { Settings } from "./components"
 import { translate } from "locales/translate"
 import { showPopup } from "toolkit/slice"
+import useAutoTitle from "hooks/useAutoTitle"
 import useToolkit from "hooks/useToolkit"
-import { useAlert } from "components/AlertProvider"
+import { calcGross, calcTaxInNet } from "./common"
 import type { TaxConfig, TaxFormData } from "./types"
 import "./Home.scss"
 
@@ -26,13 +27,14 @@ export default function Home() {
 		income: "",
 		dependents: "",
 		contributionLevel: "other",
-		contributionAmount: ""
+		targetType: "net",
+		contributionAmount: "5310000"
 	})
 	const [taxConfig, setTaxConfig] = useState<TaxConfig>(INIT_TAX_CONFIG)
+	useAutoTitle("home.header.label")
 
 	useEffect(() => {
 		const taxConfigStr = localStorage.getItem(LS_TAX_CONFIG)
-		document.title = translate("home.header.label")
 		if (taxConfigStr) {
 			setTaxConfig(JSON.parse(taxConfigStr))
 		} else {
@@ -56,8 +58,9 @@ export default function Home() {
 		if (field === "contributionLevel" && e.target.value === "official") {
 			clone.contributionAmount = clone.income
 		} else if (field === "contributionLevel" && e.target.value === "other") {
-			clone.contributionAmount = ""
+			clone.contributionAmount = taxConfig.minimumInsuranceBase.toString()
 		}
+
 		setFormData(clone)
 	}
 
@@ -65,7 +68,7 @@ export default function Home() {
 		dispatch(showPopup(1))
 	}
 
-	const handleSubmit = async () => {
+	const submitNet = async () => {
 		// prepare data
 		const formNumbers = Object.values(formData)
 			.map(Number)
@@ -75,7 +78,7 @@ export default function Home() {
 		// calculate taxable income
 		const taxableIncome =
 			totalIncome -
-			contributionAmount * INSURANCE_RATE -
+			contributionAmount * taxConfig.insuranceRate -
 			taxConfig.personalDeduction -
 			dependents * taxConfig.dependantsDeduction
 
@@ -84,30 +87,30 @@ export default function Home() {
 			return
 		}
 
-		let remaining = taxableIncome
-		let rate = 0
-		let tax = 0
-		let previousMax = 0
-
-		for (const step of taxConfig.taxSteps) {
-			if (remaining <= 0) break
-
-			const taxableAtThisRate = Math.min(remaining, step.max - previousMax)
-			tax += taxableAtThisRate * step.rate
-			rate = step.rate
-
-			remaining -= taxableAtThisRate
-			previousMax = step.max
-		}
-
-		const totalTax = Math.round(tax)
+		const taxInNet = calcTaxInNet(taxableIncome, taxConfig)
+		const net = totalIncome - contributionAmount * taxConfig.insuranceRate - taxInNet
 
 		await alertPopup(
-			`Thu nhập chịu thuế của bạn là: ${taxableIncome.toLocaleString()} ₫
-mức bảo hiểm đã đóng là: ${(contributionAmount * INSURANCE_RATE).toLocaleString()} ₫
-bạn thuộc mức thuế suất ${rate * 100}%
-số thuế phải nộp là: ${totalTax.toLocaleString()} ₫
-net income của bạn là : ${(totalIncome - contributionAmount * INSURANCE_RATE - totalTax).toLocaleString()} ₫`
+			`${translate("home.answer-net.row-1").formatWithNumber(contributionAmount * taxConfig.insuranceRate)}
+${translate("home.answer-net.row-2").formatWithNumber(taxInNet)}
+${translate("home.answer-net.row-3").formatWithNumber(net)}`
+		)
+	}
+
+	const submitGross = async () => {
+		// prepare data
+		const formNumbers = Object.values(formData)
+			.map(Number)
+			.filter((num) => !isNaN(num))
+		const [netSalary, dependents, contributionAmount] = formNumbers
+
+		const gross = calcGross(netSalary, dependents, contributionAmount, taxConfig)
+		const insuranceAmount = contributionAmount * taxConfig.insuranceRate
+
+		await alertPopup(
+			`${translate("home.answer-gross.row-1").formatWithNumber(insuranceAmount)}
+${translate("home.answer-gross.row-2").formatWithNumber(gross - insuranceAmount - netSalary)}
+${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 		)
 	}
 
@@ -156,7 +159,9 @@ net income của bạn là : ${(totalIncome - contributionAmount * INSURANCE_RAT
 								<NumberFormatField
 									value={formData.contributionAmount}
 									label="home.contribution-amount.label"
-									placeholder="home.contribution-amount.placeholder"
+									placeholder={translate("home.contribution-amount.placeholder").formatWithNumber(
+										taxConfig.minimumInsuranceBase
+									)}
 									end="₫"
 									handleUpdate={handleChange("contributionAmount")}
 								/>
@@ -171,18 +176,48 @@ net income của bạn là : ${(totalIncome - contributionAmount * INSURANCE_RAT
 				</FormControl>
 			</Box>
 
+			<Box sx={{ mb: 2 }}>
+				<TTypography
+					content="home.target-type.label"
+					variant="subtitle1"
+					sx={{ mb: 2, fontWeight: 500 }}
+				/>
+				<FormControl component="fieldset">
+					<RadioGroup
+						sx={{ flexDirection: "row" }}
+						value={formData.targetType}
+						onChange={handleChangeRadio("targetType")}
+					>
+						<FormControlLabel
+							value="net"
+							control={<Radio />}
+							label={translate("home.target-type.net")}
+						/>
+						<FormControlLabel
+							value="gross"
+							control={<Radio />}
+							label={translate("home.target-type.gross")}
+						/>
+					</RadioGroup>
+				</FormControl>
+			</Box>
+
 			<Box sx={{ display: "flex", justifyContent: "center", gap: 5 }}>
 				<TButton
+					startIcon={<i className="fa fa-calculator" />}
 					variant="contained"
 					disabled={
 						!formData.income ||
 						!formData.dependents ||
 						(formData.contributionLevel === "other" && !formData.contributionAmount)
 					}
-					onClick={handleSubmit}
-					value="home.calculate-button.label"
+					onClick={formData.targetType === "net" ? submitNet : submitGross}
+					value={translate("home.calculate-button.label").format(
+						formData.targetType.toUpperCase()
+					)}
 				/>
 				<TButton
+					startIcon={<i className="fa fa-cog" />}
 					variant="outlined"
 					onClick={handleShowSetting}
 					value="home.setting-button.label"
