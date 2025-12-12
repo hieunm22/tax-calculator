@@ -33,8 +33,8 @@ export const LS_DARKMODE = "dark-mode"
 export const LS_LANGUAGE = "language"
 export const LS_TAX_CONFIG = "tax-config"
 export const INIT_TAX_CONFIG: TaxConfig = {
-	personalDeduction: 9000000,
-	dependantsDeduction: 3600000,
+	personalDeduction: 11000000,
+	dependantsDeduction: 4400000,
 	insuranceRate: 0.105,
 	minimumInsuranceBase: 5310000,
 	taxSteps: [

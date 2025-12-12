@@ -92,8 +92,9 @@ export default function Home() {
 
 		await alertPopup(
 			`${translate("home.answer-net.row-1").formatWithNumber(contributionAmount * taxConfig.insuranceRate)}
-${translate("home.answer-net.row-2").formatWithNumber(taxInNet)}
-${translate("home.answer-net.row-3").formatWithNumber(net)}`
+${translate("home.answer-net.row-2").formatWithNumber(totalIncome - contributionAmount * taxConfig.insuranceRate)}
+${translate("home.answer-net.row-3").formatWithNumber(taxInNet)}
+${translate("home.answer-net.row-4").formatWithNumber(net)}`
 		)
 	}
 
