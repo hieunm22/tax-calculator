@@ -37,9 +37,6 @@
 		"alert": {
 			"title": "Thông báo"
 		},
-		"answer": {
-			"no-tax": "Thu nhập tính thuế của bạn < 0, chưa đến mức phải nộp thuế"
-		},
 		"answer-net": {
 			"row-1": "Mức bảo hiểm đã đóng là {0}₫",
 			"row-2": "Thu nhập trước thuế là {0} ₫",

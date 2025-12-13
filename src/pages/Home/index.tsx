@@ -72,7 +72,7 @@ export default function Home() {
 		// prepare data
 		const formNumbers = Object.values(formData)
 			.map(Number)
-			.filter((num) => !isNaN(num))
+			.filter(num => !isNaN(num))
 		const [totalIncome, dependents, contributionAmount] = formNumbers
 
 		// calculate taxable income
@@ -81,11 +81,6 @@ export default function Home() {
 			contributionAmount * taxConfig.insuranceRate -
 			taxConfig.personalDeduction -
 			dependents * taxConfig.dependantsDeduction
-
-		if (taxableIncome <= 0) {
-			await alertPopup(translate("home.answer.no-tax"))
-			return
-		}
 
 		const taxInNet = calcTaxInNet(taxableIncome, taxConfig)
 		const net = totalIncome - contributionAmount * taxConfig.insuranceRate - taxInNet
@@ -102,9 +97,10 @@ ${translate("home.answer-net.row-4").formatWithNumber(net)}`
 		// prepare data
 		const formNumbers = Object.values(formData)
 			.map(Number)
-			.filter((num) => !isNaN(num))
+			.filter(num => !isNaN(num))
 		const [netSalary, dependents, contributionAmount] = formNumbers
 
+		// calculate gross salary
 		const gross = calcGross(netSalary, dependents, contributionAmount, taxConfig)
 		const insuranceAmount = contributionAmount * taxConfig.insuranceRate
 
@@ -160,9 +156,9 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 								<NumberFormatField
 									value={formData.contributionAmount}
 									label="home.contribution-amount.label"
-									placeholder={translate("home.contribution-amount.placeholder").formatWithNumber(
-										taxConfig.minimumInsuranceBase
-									)}
+									placeholder={translate(
+										"home.contribution-amount.placeholder"
+									).formatWithNumber(taxConfig.minimumInsuranceBase)}
 									end="₫"
 									handleUpdate={handleChange("contributionAmount")}
 								/>
@@ -199,7 +195,14 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 				</FormControl>
 			</Box>
 
-			<Box sx={{ display: "flex", justifyContent: "center", gap: 5 }}>
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: { xs: "column", sm: "row" },
+					justifyContent: "center",
+					gap: 2
+				}}
+			>
 				<TButton
 					startIcon={<i className="fa fa-calculator" />}
 					variant="contained"

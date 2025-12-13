@@ -27,7 +27,7 @@ export const AlertProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 	}
 
 	const alert: AlertFn = (message, options) =>
-		new Promise<void>((resolve) => {
+		new Promise<void>(resolve => {
 			queueRef.current.push({ message, options, resolve })
 			showNext()
 		})

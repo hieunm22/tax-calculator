@@ -152,7 +152,9 @@ export const Settings = (props: UpdateTaxConfig) => {
 							<NumberFormatField
 								value={step.max}
 								label={translate("config.tax-step-x.label").formatWithNumber(index + 1)}
-								placeholder={translate("config.tax-step-x.label").formatWithNumber(index + 1)}
+								placeholder={translate("config.tax-step-x.label").formatWithNumber(
+									index + 1
+								)}
 								end="₫"
 								handleUpdate={handleChange(`taxSteps[${index + 1}].max`)}
 							/>
@@ -160,7 +162,9 @@ export const Settings = (props: UpdateTaxConfig) => {
 							<NumberFormatField
 								value={step.rate * 100}
 								label={translate("config.tax-rate-x.label").formatWithNumber(index + 1)}
-								placeholder={translate("config.tax-rate-x.label").formatWithNumber(index + 1)}
+								placeholder={translate("config.tax-rate-x.label").formatWithNumber(
+									index + 1
+								)}
 								end="%"
 								handleUpdate={handleChange(`taxSteps[${index + 1}].rate`)}
 							/>

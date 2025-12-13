@@ -37,9 +37,6 @@
 		"alert": {
 			"title": "Notification"
 		},
-		"answer": {
-			"no-tax": "Your taxable income is negative, no need to pay tax"
-		},
 		"answer-net": {
 			"row-1": "Paid insurance is {0} ₫",
 			"row-2": "Before tax income is {0} ₫",
