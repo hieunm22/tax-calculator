@@ -66,6 +66,12 @@ export const Settings = (props: UpdateTaxConfig) => {
 		setConfigData(clone)
 	}
 
+	const handleAddStep = () => {
+		const clone = structuredClone(configData)
+		clone.taxSteps.push({ max: 0, rate: 0 })
+		setConfigData(clone)
+	}
+
 	const handleSave = () => {
 		localStorage.setItem(LS_TAX_CONFIG, JSON.stringify(configData))
 		props.handleUpdateConfig(configData)
@@ -73,8 +79,7 @@ export const Settings = (props: UpdateTaxConfig) => {
 	}
 
 	const handleReset = () => {
-		localStorage.setItem(LS_TAX_CONFIG, JSON.stringify(INIT_TAX_CONFIG))
-		props.handleUpdateConfig(INIT_TAX_CONFIG)
+		setConfigData(INIT_TAX_CONFIG)
 	}
 
 	const handleClose = (_: any, reason: "backdropClick" | "escapeKeyDown") => {
@@ -143,19 +148,30 @@ export const Settings = (props: UpdateTaxConfig) => {
 
 				<Box sx={{ mb: 2 }}>
 					{configData.taxSteps.map((step, index) => (
-						<Box key={index} sx={{ display: "flex", justifyContent: "space-arround" }}>
+						<Box
+							key={index}
+							sx={{
+								display: "flex",
+								flexDirection: { xs: "column", sm: "row" },
+								justifyContent: "space-arround"
+							}}
+						>
 							<NumberFormatField
 								value={step.max}
-								label={`config.tax-step-${index + 1}.label`}
-								placeholder={`config.tax-step-${index + 1}.label`}
+								label={translate("config.tax-step-x.label").formatWithNumber(index + 1)}
+								placeholder={translate("config.tax-step-x.label").formatWithNumber(
+									index + 1
+								)}
 								end="₫"
 								handleUpdate={handleChange(`taxSteps[${index + 1}].max`)}
 							/>
 							&nbsp;&nbsp;
 							<NumberFormatField
 								value={step.rate * 100}
-								label={`config.tax-rate-${index + 1}.label`}
-								placeholder={`config.tax-rate-${index + 1}.label`}
+								label={translate("config.tax-rate-x.label").formatWithNumber(index + 1)}
+								placeholder={translate("config.tax-rate-x.label").formatWithNumber(
+									index + 1
+								)}
 								end="%"
 								handleUpdate={handleChange(`taxSteps[${index + 1}].rate`)}
 							/>
@@ -167,9 +183,21 @@ export const Settings = (props: UpdateTaxConfig) => {
 							</div>
 						</Box>
 					))}
+					<TButton
+						size="small"
+						startIcon={<i className="fas fa-plus" />}
+						value="config.add-step.label"
+						onClick={handleAddStep}
+						disabled={configData.taxSteps.some(s => !s.max || !s.rate)}
+					/>
 				</Box>
 
-				<Box sx={{ display: "flex", justifyContent: "center", gap: 5 }}>
+				<Box sx={{
+					display: "flex",
+					justifyContent: "center",
+					flexDirection: { xs: "column", sm: "row" },
+					gap: 1
+				}}>
 					<TButton
 						variant="contained"
 						onClick={handleSave}

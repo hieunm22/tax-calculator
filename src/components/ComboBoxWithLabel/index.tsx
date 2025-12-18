@@ -39,7 +39,7 @@ export const ComboBoxWithLabel = (props: ComboBoxWithLabelProps) => {
 					onBlur={props.blur}
 					onChange={handleChange}
 				>
-					{props.options.map((option) => (
+					{props.options.map(option => (
 						<MenuItem key={option.key} value={option.key} disabled={option.disabled}>
 							{option.icon && (
 								<img className="dropdown-flag" src={option.icon} alt={option.value} />

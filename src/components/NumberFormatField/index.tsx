@@ -1,14 +1,14 @@
-import React from "react"
+import { useEffect, useState } from "react"
 import { TextField, TextFieldProps } from "@mui/material"
-import { translate } from "../../locales/translate"
+import { translate } from "locales/translate"
 import type { NumberFormatProps } from "./types"
 
 export default function NumberFormatField(props: NumberFormatProps & TextFieldProps) {
-	const [displayValue, setDisplayValue] = React.useState("")
-	const [helpText, setHelpText] = React.useState("")
-	const [realValue, setRealValue] = React.useState("")
+	const [displayValue, setDisplayValue] = useState("")
+	const [helpText, setHelpText] = useState("")
+	const [realValue, setRealValue] = useState("")
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (props.value) {
 			setRealValue(props.value.toString())
 
@@ -63,7 +63,7 @@ export default function NumberFormatField(props: NumberFormatProps & TextFieldPr
 					inputMode: "numeric",
 					endAdornment: props.end
 				},
-				htmlInput: {}
+				htmlInput: { pattern: "[0-9]*" }
 			}}
 		/>
 	)

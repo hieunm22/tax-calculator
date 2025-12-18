@@ -10,7 +10,7 @@ import {
 import { INIT_TAX_CONFIG, LS_TAX_CONFIG } from "common/constants"
 import { useAlert } from "components/AlertProvider"
 import NumberFormatField from "components/NumberFormatField"
-import { TButton, TTypography } from "components/TranslationTag"
+import { TButton, TTextField, TTypography } from "components/TranslationTag"
 import { Settings } from "./components"
 import { translate } from "locales/translate"
 import { showPopup } from "toolkit/slice"
@@ -72,28 +72,23 @@ export default function Home() {
 		// prepare data
 		const formNumbers = Object.values(formData)
 			.map(Number)
-			.filter((num) => !isNaN(num))
+			.filter(num => !isNaN(num))
 		const [totalIncome, dependents, contributionAmount] = formNumbers
+		const totalDeductions = taxConfig.personalDeduction + dependents * taxConfig.dependantsDeduction
+		const insuranceAmount = contributionAmount * taxConfig.insuranceRate
 
 		// calculate taxable income
-		const taxableIncome =
-			totalIncome -
-			contributionAmount * taxConfig.insuranceRate -
-			taxConfig.personalDeduction -
-			dependents * taxConfig.dependantsDeduction
-
-		if (taxableIncome <= 0) {
-			await alertPopup(translate("home.answer.no-tax"))
-			return
-		}
-
+		const taxableIncome = totalIncome - insuranceAmount - totalDeductions
 		const taxInNet = calcTaxInNet(taxableIncome, taxConfig)
-		const net = totalIncome - contributionAmount * taxConfig.insuranceRate - taxInNet
+		const net = totalIncome - insuranceAmount - taxInNet
 
 		await alertPopup(
-			`${translate("home.answer-net.row-1").formatWithNumber(contributionAmount * taxConfig.insuranceRate)}
-${translate("home.answer-net.row-2").formatWithNumber(taxInNet)}
-${translate("home.answer-net.row-3").formatWithNumber(net)}`
+			`${translate("home.answer.row-1").formatWithNumber(totalIncome)}
+${translate("home.answer.row-2").formatWithNumber(insuranceAmount)}
+${translate("home.answer.row-3").formatWithNumber(totalIncome - insuranceAmount)}
+${translate("home.answer.row-4").formatWithNumber(totalIncome - insuranceAmount - totalDeductions)}
+${translate("home.answer.row-5").formatWithNumber(taxInNet)}
+${translate("home.answer.row-6").formatWithNumber(net)}`
 		)
 	}
 
@@ -101,16 +96,21 @@ ${translate("home.answer-net.row-3").formatWithNumber(net)}`
 		// prepare data
 		const formNumbers = Object.values(formData)
 			.map(Number)
-			.filter((num) => !isNaN(num))
+			.filter(num => !isNaN(num))
 		const [netSalary, dependents, contributionAmount] = formNumbers
 
+		// calculate gross salary
 		const gross = calcGross(netSalary, dependents, contributionAmount, taxConfig)
 		const insuranceAmount = contributionAmount * taxConfig.insuranceRate
+		const totalDeductions = taxConfig.personalDeduction + dependents * taxConfig.dependantsDeduction
 
 		await alertPopup(
-			`${translate("home.answer-gross.row-1").formatWithNumber(insuranceAmount)}
-${translate("home.answer-gross.row-2").formatWithNumber(gross - insuranceAmount - netSalary)}
-${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
+			`${translate("home.answer.row-1").formatWithNumber(gross)}
+${translate("home.answer.row-2").formatWithNumber(insuranceAmount)}
+${translate("home.answer.row-3").formatWithNumber(gross - insuranceAmount)}
+${translate("home.answer.row-4").formatWithNumber(gross - insuranceAmount - totalDeductions)}
+${translate("home.answer.row-5").formatWithNumber(gross - insuranceAmount - netSalary)}
+${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 		)
 	}
 
@@ -127,22 +127,26 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 						end="₫"
 						handleUpdate={handleChange("income")}
 					/>
-					<NumberFormatField
+					<TTextField
 						fullWidth
+						variant="standard"
 						label="home.dependents.label"
 						placeholder="home.dependents.placeholder"
+						type="number"
 						sx={{ my: 2 }}
-						end={<i className="fa fa-user" />}
-						handleUpdate={handleChange("dependents")}
+						slotProps={{
+							input: { endAdornment: <i className="fa fa-user" /> }
+						}}
+						onBlur={e => handleChange("dependents")(e.target.value)}
 					/>
 				</Box>
 			</Box>
 
-			<Box sx={{ mb: 4 }}>
+			<Box sx={{ mb: 2 }}>
 				<TTypography
 					content="home.contribution-level.label"
 					variant="subtitle1"
-					sx={{ mb: 2, fontWeight: 500 }}
+					sx={{ mb: 1, fontWeight: 500 }}
 				/>
 				<FormControl component="fieldset">
 					<RadioGroup
@@ -159,9 +163,9 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 								<NumberFormatField
 									value={formData.contributionAmount}
 									label="home.contribution-amount.label"
-									placeholder={translate("home.contribution-amount.placeholder").formatWithNumber(
-										taxConfig.minimumInsuranceBase
-									)}
+									placeholder={translate(
+										"home.contribution-amount.placeholder"
+									).formatWithNumber(taxConfig.minimumInsuranceBase)}
 									end="₫"
 									handleUpdate={handleChange("contributionAmount")}
 								/>
@@ -177,11 +181,7 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 			</Box>
 
 			<Box sx={{ mb: 2 }}>
-				<TTypography
-					content="home.target-type.label"
-					variant="subtitle1"
-					sx={{ mb: 2, fontWeight: 500 }}
-				/>
+				<TTypography content="home.target-type.label" variant="subtitle1" />
 				<FormControl component="fieldset">
 					<RadioGroup
 						sx={{ flexDirection: "row" }}
@@ -202,7 +202,14 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 				</FormControl>
 			</Box>
 
-			<Box sx={{ display: "flex", justifyContent: "center", gap: 5 }}>
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: { xs: "column", sm: "row" },
+					justifyContent: "center",
+					gap: 2
+				}}
+			>
 				<TButton
 					startIcon={<i className="fa fa-calculator" />}
 					variant="contained"
@@ -212,9 +219,7 @@ ${translate("home.answer-gross.row-3").formatWithNumber(gross)}`
 						(formData.contributionLevel === "other" && !formData.contributionAmount)
 					}
 					onClick={formData.targetType === "net" ? submitNet : submitGross}
-					value={translate("home.calculate-button.label").format(
-						formData.targetType.toUpperCase()
-					)}
+					value={formData.targetType === "net" ? "GROSS → NET" : "NET → GROSS"}
 				/>
 				<TButton
 					startIcon={<i className="fa fa-cog" />}
