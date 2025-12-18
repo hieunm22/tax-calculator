@@ -19,8 +19,7 @@ export const COUNTRIES_DROPDOWN = [
 	{
 		key: "kr",
 		icon: "https://cdn.jsdelivr.net/npm/twemoji@latest/2/svg/1f1f0-1f1f7.svg",
-		value: "한국인 (Korean)",
-		disabled: true
+		value: "한국인 (Korean)"
 	},
 	{
 		key: "cn",

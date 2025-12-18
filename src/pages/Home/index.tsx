@@ -135,7 +135,10 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 						type="number"
 						sx={{ my: 2 }}
 						slotProps={{
-							input: { endAdornment: <i className="fa fa-user" /> }
+							input: {
+								endAdornment: <i className="fa fa-user" />,
+							},
+							htmlInput: { min: 0, max: 24, step: 1 }
 						}}
 						onBlur={e => handleChange("dependents")(e.target.value)}
 					/>

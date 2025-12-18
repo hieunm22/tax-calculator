@@ -1,0 +1,97 @@
+{
+	"constant": {
+		"is-required": "필수 입력 항목"
+	},
+	"home": {
+		"header": {
+			"label": "개인 소득세 스프레드시트"
+		},
+		"income": {
+			"label": "소득",
+			"placeholder": "소득 입력"
+		},
+		"dependents": {
+			"label": "부양가족 수",
+			"placeholder": "부양가족 수 입력"
+		},
+		"contribution-level": {
+			"label": "보험료 납부 수준",
+			"official": "공무원 급여 초과",
+			"other": "기타"
+		},
+		"contribution-amount": {
+			"label": "보험료 납부 수준",
+			"placeholder": "최저 {0}₫"
+		},
+		"target-type": {
+			"label": "계산할 급여",
+			"net": "순소득",
+			"gross": "총소득"
+		},
+		"calculate-button": {
+			"label": "급여 {0} 계산"
+		},
+		"setting-button": {
+			"label": "세금 설정"
+		},
+		"alert": {
+			"title": "알림"
+		},
+		"answer": {
+			"row-1": "총소득은 {0}₫입니다.",
+			"row-2": "납부한 보험료는 {0}₫입니다.",
+			"row-3": "세전 소득은 {0}₫입니다.",
+			"row-4": "과세 소득은 {0}₫입니다.",
+			"row-5": "납부할 세액은 {0}₫입니다.",
+			"row-6": "순소득은 {0}₫입니다."
+		}
+	},
+	"setting": {
+		"header": {
+			"label": "설정"
+		},
+		"language": {
+			"label": "언어"
+		},
+		"darkmode": {
+			"label": "다크 모드"
+		},
+		"btn-close": {
+			"label": "닫기"
+		}
+	},
+	"config": {
+		"personal-deduction": {
+			"label": "개인 공제",
+			"placeholder": "개인 공제 입력"
+		},
+		"dependants-deduction": {
+			"label": "부양가족 공제",
+			"placeholder": "부양가족 공제 입력"
+		},
+		"insurance-rate": {
+			"label": "보험료 납부율"
+		},
+		"minimum-insurance": {
+			"label": "최저 급여"
+		},
+		"tax-step-x": {
+			"label": "세율 수준 {0}"
+		},
+		"tax-rate-x": {
+			"label": "세율 수준 {0}"
+		},
+		"add-step": {
+			"label": "추가 레벨"
+		},
+		"save": {
+			"label": "저장"
+		},
+		"default": {
+			"label": "기본값"
+		},
+		"close": {
+			"label": "닫기"
+		}
+	}
+}

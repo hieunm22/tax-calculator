@@ -205,8 +205,8 @@ export const Settings = (props: UpdateTaxConfig) => {
 						value="config.save.label"
 					/>
 					<TButton
-						variant="outlined"
-						color="info"
+						variant="contained"
+						color="success"
 						startIcon={<i className="fas fa-undo" />}
 						onClick={handleReset}
 						value="config.default.label"

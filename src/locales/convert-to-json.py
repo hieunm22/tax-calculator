@@ -21,16 +21,18 @@ ws = wb.active
 nested_en = {}
 nested_vi = {}
 nested_jp = {}
+nested_kr = {}
 
 # Remove header row
 for row in ws.iter_rows(min_row=2, values_only=True):
-  if row and len(row) >= 3:
-    full_key, en, vi, jp = row
+  if row and len(row) >= 4:
+    full_key, en, vi, jp, kr = row
     if full_key:
       key_parts = str(full_key).split(".")
       insert_nested(nested_en, key_parts, str(en) if en else "")
       insert_nested(nested_vi, key_parts, str(vi) if vi else "")
       insert_nested(nested_jp, key_parts, str(jp) if jp else "")
+      insert_nested(nested_kr, key_parts, str(kr) if kr else "")
 
 # Write JSON with tab format
 def write_json(filename, data):
@@ -47,5 +49,6 @@ def write_json(filename, data):
 write_json("locales/en.json", nested_en)
 write_json("locales/vi.json", nested_vi)
 write_json("locales/jp.json", nested_jp)
+write_json("locales/kr.json", nested_kr)
 
 print("✅ Export successfully at", datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
