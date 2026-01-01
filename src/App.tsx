@@ -14,7 +14,7 @@ import useToolkit from "./hooks/useToolkit"
 import "./style/responsive.scss"
 
 function App() {
-	const darkMode = localStorage.getItem(LS_DARKMODE) || "dark"
+	const darkMode = localStorage.getItem(LS_DARKMODE) || "light"
 	const { state } = useToolkit()
 
 	const createThemeCallback = () =>
