@@ -1,0 +1,93 @@
+{
+	"constant": {
+		"is-required": "必填"
+	},
+	"home": {
+		"header": {
+			"label": "個人所得稅計算器"
+		},
+		"income": {
+			"label": "收入",
+			"placeholder": "輸入收入"
+		},
+		"dependents": {
+			"label": "受扶養人",
+			"placeholder": "輸入受扶養人"
+		},
+		"contribution-level": {
+			"label": "繳費等級",
+			"official": "以正式工資計算",
+			"other": "其他"
+		},
+		"contribution-amount": {
+			"label": "繳費金額",
+			"placeholder": "至少 {0}₫"
+		},
+		"target-type": {
+			"label": "目標工資類型",
+			"net": "淨收入",
+			"gross": "總收入"
+		},
+		"calculate-button": {
+			"label": "計算至 {0}"
+		},
+		"alert": {
+			"title": "薪資和稅務詳情"
+		},
+		"answer": {
+			"row-1": "總收入為 {0}₫",
+			"row-2": "已繳保險費為 {0}₫",
+			"row-3": "稅前收入為 {0}₫",
+			"row-4": "應稅所得為 {0}₫",
+			"row-5": "稅額為 {0}₫",
+			"row-6": "淨收入為 {0}₫"
+		}
+	},
+	"setting": {
+		"header": {
+			"label": "設定"
+		},
+		"language": {
+			"label": "語言"
+		},
+		"darkmode": {
+			"label": "深色模式"
+		},
+		"btn-close": {
+			"label": "關閉"
+		}
+	},
+	"config": {
+		"personal-deduction": {
+			"label": "個人扣除額"
+		},
+		"dependants-deduction": {
+			"label": "受扶養人扣除額"
+		},
+		"insurance-rate": {
+			"label": "保險費率"
+		},
+		"minimum-insurance": {
+			"label": "最低保險基數"
+		},
+		"policy": {
+			"label": "個人所得稅政策",
+			"label1": "04/2007/QH12 號 法律",
+			"label2": "第 954/2020/UBTVQH14 號決議",
+			"label3": "第 110/2025/UBTVQH15 號決議",
+			"tooltip": "稅收政策詳情"
+		},
+		"tax-level": {
+			"label": "稅級"
+		},
+		"tax-step": {
+			"label": "稅階"
+		},
+		"tax-rate": {
+			"label": "稅率"
+		},
+		"close": {
+			"label": "關閉"
+		}
+	}
+}

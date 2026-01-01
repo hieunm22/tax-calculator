@@ -27,7 +27,7 @@ const Navbar = () => {
 
 	useEffect(() => {
 		if (open) {
-			const lang = localStorage.getItem(LS_LANGUAGE) || "en"
+			const lang = localStorage.getItem(LS_LANGUAGE) || "vi"
 			changeLanguage(lang)
 		}
 	}, [open])
