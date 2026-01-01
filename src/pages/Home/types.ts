@@ -18,7 +18,3 @@ export interface TaxConfig {
 	minimumInsuranceBase: number
 	taxSteps: TaxStep[]
 }
-
-export interface UpdateTaxConfig {
-	handleUpdateConfig: (config: TaxConfig) => void
-}

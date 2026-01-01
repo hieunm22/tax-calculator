@@ -31,11 +31,8 @@
 		"calculate-button": {
 			"label": "Tính lương {0}"
 		},
-		"setting-button": {
-			"label": "Cấu hình thuế"
-		},
 		"alert": {
-			"title": "Thông báo"
+			"title": "Chi tiết lương và thuế"
 		},
 		"answer": {
 			"row-1": "Thu nhập Gross của bạn là {0}₫",
@@ -62,12 +59,10 @@
 	},
 	"config": {
 		"personal-deduction": {
-			"label": "Giảm trừ cá nhân",
-			"placeholder": "Nhập giảm trừ cá nhân"
+			"label": "Giảm trừ cá nhân"
 		},
 		"dependants-deduction": {
-			"label": "Giảm trừ người phụ thuộc",
-			"placeholder": "Nhập giảm trừ người phụ thuộc"
+			"label": "Giảm trừ người phụ thuộc"
 		},
 		"insurance-rate": {
 			"label": "Tỷ lệ đóng bảo hiểm"
@@ -75,20 +70,21 @@
 		"minimum-insurance": {
 			"label": "Mức lương tối thiểu"
 		},
-		"tax-step-x": {
-			"label": "Biểu thuế mức {0}"
+		"policy": {
+			"label": "Chính sách thuế TNCN",
+			"label1": "Luật số 04/2007/QH12",
+			"label2": "Nghị quyết 954/2020/UBTVQH14",
+			"label3": "Nghị quyết 110/2025/UBTVQH15",
+			"tooltip": "Chi tiết chính sách thuế"
 		},
-		"tax-rate-x": {
-			"label": "Tỷ suất thuế mức {0}"
+		"tax-level": {
+			"label": "Bậc"
 		},
-		"add-step": {
-			"label": "Thêm bậc"
+		"tax-step": {
+			"label": "Biểu thuế"
 		},
-		"save": {
-			"label": "Lưu"
-		},
-		"default": {
-			"label": "Mặc định"
+		"tax-rate": {
+			"label": "Tỷ suất thuế"
 		},
 		"close": {
 			"label": "Đóng"

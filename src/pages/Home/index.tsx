@@ -5,18 +5,21 @@ import {
 	RadioGroup,
 	FormControlLabel,
 	Radio,
-	Paper
+	Paper,
+	Select,
+	MenuItem
 } from "@mui/material"
-import { INIT_TAX_CONFIG, LS_TAX_CONFIG } from "common/constants"
+import { TAX_CONFIGS, LS_TAX_CONFIG } from "common/constants"
 import { useAlert } from "components/AlertProvider"
 import NumberFormatField from "components/NumberFormatField"
-import { TButton, TTextField, TTypography } from "components/TranslationTag"
+import { TButton, TI, TTextField, TTypography } from "components/TranslationTag"
 import { Settings } from "./components"
 import { translate } from "locales/translate"
 import { showPopup } from "toolkit/slice"
 import useAutoTitle from "hooks/useAutoTitle"
 import useToolkit from "hooks/useToolkit"
 import { calcGross, calcTaxInNet } from "./common"
+import "common/helper"
 import type { TaxConfig, TaxFormData } from "./types"
 import "./Home.scss"
 
@@ -30,18 +33,23 @@ export default function Home() {
 		targetType: "net",
 		contributionAmount: "5310000"
 	})
-	const [taxConfig, setTaxConfig] = useState<TaxConfig>(INIT_TAX_CONFIG)
+	const [taxConfig, setTaxConfig] = useState<TaxConfig>(TAX_CONFIGS[1])
+	const [taxIndex, setTaxIndex] = useState<number>(1)
 	useAutoTitle("home.header.label")
 
 	useEffect(() => {
 		const taxConfigStr = localStorage.getItem(LS_TAX_CONFIG)
 		if (taxConfigStr) {
-			setTaxConfig(JSON.parse(taxConfigStr))
+			setTaxIndex(Number(taxConfigStr))
 		} else {
-			localStorage.setItem(LS_TAX_CONFIG, JSON.stringify(INIT_TAX_CONFIG))
-			setTaxConfig(INIT_TAX_CONFIG)
+			localStorage.setItem(LS_TAX_CONFIG, "1")
 		}
 	}, [])
+
+	useEffect(() => {
+		setTaxConfig(TAX_CONFIGS[taxIndex])
+		localStorage.setItem(LS_TAX_CONFIG, taxIndex.toString())
+	}, [taxIndex])
 
 	const handleChange = (field: string) => (str: string) => {
 		const clone = structuredClone(formData)
@@ -135,7 +143,10 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 						type="number"
 						sx={{ my: 2 }}
 						slotProps={{
-							input: { endAdornment: <i className="fa fa-user" /> }
+							input: {
+								endAdornment: <i className="fa fa-user" />,
+							},
+							htmlInput: { min: 0, max: 24, step: 1 }
 						}}
 						onBlur={e => handleChange("dependents")(e.target.value)}
 					/>
@@ -181,6 +192,31 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 			</Box>
 
 			<Box sx={{ mb: 2 }}>
+				<TTypography
+					content="config.policy.label"
+					variant="subtitle1"
+					sx={{ mb: 1, fontWeight: 500 }}
+				/>
+				<Select
+					size="small"
+					sx={{ minWidth: "calc(100% - 52px)" }}
+					variant="standard"
+					labelId="dropdown-label"
+					value={taxIndex}
+					onChange={e => setTaxIndex(e.target.value)}
+				>
+					<MenuItem value={0}>{translate("config.policy.label1")}</MenuItem>
+					<MenuItem value={1}>{translate("config.policy.label2")}</MenuItem>
+					<MenuItem value={2}>{translate("config.policy.label3")}</MenuItem>
+				</Select>
+				<TI
+					className="far fa-info-circle info"
+					title="config.policy.tooltip"
+					onClick={handleShowSetting}
+				/>
+			</Box>
+
+			<Box sx={{ mb: 2 }}>
 				<TTypography content="home.target-type.label" variant="subtitle1" />
 				<FormControl component="fieldset">
 					<RadioGroup
@@ -221,14 +257,8 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 					onClick={formData.targetType === "net" ? submitNet : submitGross}
 					value={formData.targetType === "net" ? "GROSS → NET" : "NET → GROSS"}
 				/>
-				<TButton
-					startIcon={<i className="fa fa-cog" />}
-					variant="outlined"
-					onClick={handleShowSetting}
-					value="home.setting-button.label"
-				/>
 			</Box>
-			<Settings handleUpdateConfig={setTaxConfig} />
+			<Settings />
 		</Paper>
 	)
 }

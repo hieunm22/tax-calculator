@@ -31,11 +31,8 @@
 		"calculate-button": {
 			"label": "Calculate to {0}"
 		},
-		"setting-button": {
-			"label": "Tax configuration"
-		},
 		"alert": {
-			"title": "Notification"
+			"title": "Salary and tax detail"
 		},
 		"answer": {
 			"row-1": "Gross income is {0}₫",
@@ -62,12 +59,10 @@
 	},
 	"config": {
 		"personal-deduction": {
-			"label": "Personal deduction",
-			"placeholder": "Enter personal deduction"
+			"label": "Personal deduction"
 		},
 		"dependants-deduction": {
-			"label": "Dependants deduction",
-			"placeholder": "Enter dependants deduction"
+			"label": "Dependants deduction"
 		},
 		"insurance-rate": {
 			"label": "Insurance rate"
@@ -75,20 +70,21 @@
 		"minimum-insurance": {
 			"label": "Minimum insurance base"
 		},
-		"tax-step-x": {
-			"label": "Tax step level {0}"
+		"policy": {
+			"label": "PIT Policy",
+			"label1": "Law No. 04/2007/QH12",
+			"label2": "Resolution 954/2020/UBTVQH14",
+			"label3": "Resolution 110/2025/UBTVQH15",
+			"tooltip": "Tax policy detail"
 		},
-		"tax-rate-x": {
-			"label": "Tax rate level {0}"
+		"tax-level": {
+			"label": "Tax level"
 		},
-		"add-step": {
-			"label": "Add step"
+		"tax-step": {
+			"label": "Tax step"
 		},
-		"save": {
-			"label": "Save"
-		},
-		"default": {
-			"label": "Reset to default"
+		"tax-rate": {
+			"label": "Tax rate"
 		},
 		"close": {
 			"label": "Close"

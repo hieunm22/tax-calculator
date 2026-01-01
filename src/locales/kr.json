@@ -1,0 +1,93 @@
+{
+	"constant": {
+		"is-required": "필수 입력 항목"
+	},
+	"home": {
+		"header": {
+			"label": "개인 소득세 스프레드시트"
+		},
+		"income": {
+			"label": "소득",
+			"placeholder": "소득 입력"
+		},
+		"dependents": {
+			"label": "부양가족 수",
+			"placeholder": "부양가족 수 입력"
+		},
+		"contribution-level": {
+			"label": "보험료 납부 수준",
+			"official": "공무원 급여 초과",
+			"other": "기타"
+		},
+		"contribution-amount": {
+			"label": "보험료 납부 수준",
+			"placeholder": "최저 {0}₫"
+		},
+		"target-type": {
+			"label": "계산할 급여",
+			"net": "순소득",
+			"gross": "총소득"
+		},
+		"calculate-button": {
+			"label": "급여 {0} 계산"
+		},
+		"alert": {
+			"title": "급여 및 세금 세부 정보"
+		},
+		"answer": {
+			"row-1": "총소득은 {0}₫입니다.",
+			"row-2": "납부한 보험료는 {0}₫입니다.",
+			"row-3": "세전 소득은 {0}₫입니다.",
+			"row-4": "과세 소득은 {0}₫입니다.",
+			"row-5": "납부할 세액은 {0}₫입니다.",
+			"row-6": "순소득은 {0}₫입니다."
+		}
+	},
+	"setting": {
+		"header": {
+			"label": "설정"
+		},
+		"language": {
+			"label": "언어"
+		},
+		"darkmode": {
+			"label": "다크 모드"
+		},
+		"btn-close": {
+			"label": "닫기"
+		}
+	},
+	"config": {
+		"personal-deduction": {
+			"label": "개인 공제"
+		},
+		"dependants-deduction": {
+			"label": "부양가족 공제"
+		},
+		"insurance-rate": {
+			"label": "보험료 납부율"
+		},
+		"minimum-insurance": {
+			"label": "최저 급여"
+		},
+		"policy": {
+			"label": "개인소득세 정책",
+			"label1": "법률 제04/2007/QH12호",
+			"label2": "결의안 954/2020/UBTVQH14",
+			"label3": "결의안 110/2025/UBTVQH15",
+			"tooltip": "세금 정책 세부 정보"
+		},
+		"tax-level": {
+			"label": "세금 수준"
+		},
+		"tax-step": {
+			"label": "세금 단계"
+		},
+		"tax-rate": {
+			"label": "세율"
+		},
+		"close": {
+			"label": "닫기"
+		}
+	}
+}

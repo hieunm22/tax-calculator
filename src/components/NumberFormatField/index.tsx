@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { TextField, TextFieldProps } from "@mui/material"
 import { translate } from "locales/translate"
+import { formatNumber } from "common/helper"
 import type { NumberFormatProps } from "./types"
 
 export default function NumberFormatField(props: NumberFormatProps & TextFieldProps) {
@@ -16,11 +17,6 @@ export default function NumberFormatField(props: NumberFormatProps & TextFieldPr
 			setDisplayValue(formatValue)
 		}
 	}, [props.value])
-
-	const formatNumber = (num: number) => {
-		if (!num) return ""
-		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-	}
 
 	const handleBlur = () => {
 		const formatValue = formatNumber(Number(realValue))

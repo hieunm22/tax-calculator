@@ -5,20 +5,29 @@ import {
 	DialogContent,
 	DialogTitle,
 	Divider,
-	FormControlLabel
+	FormControlLabel,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Typography
 } from "@mui/material"
-import { INIT_TAX_CONFIG, LS_LANGUAGE, LS_TAX_CONFIG } from "common/constants"
+import { TAX_CONFIGS, LS_LANGUAGE, LS_TAX_CONFIG } from "common/constants"
 import { TButton, TSpan, TTypography } from "components/TranslationTag"
-import NumberFormatField from "components/NumberFormatField"
 import { translate } from "locales/translate"
 import i18n from "locales/i18n"
 import useToolkit from "hooks/useToolkit"
 import { showPopup } from "toolkit/slice"
-import { TaxConfig, UpdateTaxConfig } from "./types"
+import { formatNumber } from "common/helper"
+import { TaxConfig } from "./types"
 
-export const Settings = (props: UpdateTaxConfig) => {
+export const Settings = () => {
 	const { state, dispatch } = useToolkit()
-	const [configData, setConfigData] = useState<TaxConfig>(INIT_TAX_CONFIG)
+	const [taxIndex, setTaxIndex] = useState<number>(1)
+	const [configData, setConfigData] = useState<TaxConfig>(TAX_CONFIGS[1])
 
 	useEffect(() => {
 		if (state.activePopup === 1) {
@@ -26,61 +35,16 @@ export const Settings = (props: UpdateTaxConfig) => {
 			i18n.changeLanguage(lang)
 
 			const taxConfigLS = localStorage.getItem(LS_TAX_CONFIG)
-			const taxConfig = taxConfigLS ? JSON.parse(taxConfigLS) : null
-			if (!taxConfig || taxConfig.taxSteps.length === 0) {
-				localStorage.setItem(LS_TAX_CONFIG, JSON.stringify(INIT_TAX_CONFIG))
-				setConfigData(INIT_TAX_CONFIG)
+			if (!taxConfigLS) {
+				localStorage.setItem(LS_TAX_CONFIG, "1")
+				setTaxIndex(1)
+				setConfigData(TAX_CONFIGS[1])
 			} else {
-				setConfigData(taxConfig)
+				setConfigData(TAX_CONFIGS[+taxConfigLS])
+				setTaxIndex(+taxConfigLS)
 			}
 		}
 	}, [state.activePopup])
-
-	const handleChange = (field: string) => (value: string) => {
-		const clone = structuredClone(configData)
-		if (field === "personalDeduction") {
-			clone.personalDeduction = +value
-		} else if (field === "dependantsDeduction") {
-			clone.dependantsDeduction = +value
-		} else if (field.startsWith("taxSteps")) {
-			const match = field.match(/taxSteps\[(\d+)\]\.(rate|max)/)
-			if (match) {
-				const index = Number(match[1]) - 1
-				if (index >= 0 && index < clone.taxSteps.length) {
-					const step = clone.taxSteps[index]
-					if (field.endsWith("max")) {
-						step.max = +value
-					} else {
-						step.rate = +value / 100
-					}
-				}
-			}
-		}
-		setConfigData(clone)
-	}
-
-	const handleRemoveStep = (index: number) => {
-		const clone = structuredClone(configData)
-		const steps = clone.taxSteps.filter((_, i) => i !== index)
-		clone.taxSteps = steps
-		setConfigData(clone)
-	}
-
-	const handleAddStep = () => {
-		const clone = structuredClone(configData)
-		clone.taxSteps.push({ max: 0, rate: 0 })
-		setConfigData(clone)
-	}
-
-	const handleSave = () => {
-		localStorage.setItem(LS_TAX_CONFIG, JSON.stringify(configData))
-		props.handleUpdateConfig(configData)
-		dispatch(showPopup(0))
-	}
-
-	const handleReset = () => {
-		setConfigData(INIT_TAX_CONFIG)
-	}
 
 	const handleClose = (_: any, reason: "backdropClick" | "escapeKeyDown") => {
 		if (reason === "escapeKeyDown") {
@@ -88,48 +52,47 @@ export const Settings = (props: UpdateTaxConfig) => {
 		}
 	}
 
-	const insuranceBase =
-		configData.minimumInsuranceBase.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-		" ₫"
+	const insuranceBase = formatNumber(configData.minimumInsuranceBase) + " ₫"
 	const insuranceRate = configData.insuranceRate * 100 + " %"
 
 	return (
 		<Dialog open={state.activePopup === 1} onClose={handleClose}>
 			<DialogTitle padding="5px 20px !important" width={350}>
-				{translate("setting.header.label")}
+				{translate("config.policy.label" + (taxIndex + 1))}
 			</DialogTitle>
 			<Divider sx={{ my: "5px" }} />
 			<DialogContent className="dialog-content">
-				<NumberFormatField
-					fullWidth
-					value={configData.personalDeduction}
-					label="config.personal-deduction.label"
-					placeholder="config.personal-deduction.placeholder"
-					sx={{ mb: 1 }}
-					end="₫"
-					handleUpdate={handleChange("personalDeduction")}
-				/>
-				<NumberFormatField
-					fullWidth
-					value={configData.dependantsDeduction}
-					label="config.dependants-deduction.label"
-					placeholder="config.dependants-deduction.placeholder"
-					sx={{ mb: 1 }}
-					end="₫"
-					handleUpdate={handleChange("dependantsDeduction")}
-				/>
 				<FormControlLabel
-					label={
-						<TSpan className="label-constant" content="config.minimum-insurance.label" />
-					}
+					label={<TSpan className="label-constant" content="config.personal-deduction.label" />}
 					labelPlacement="start"
-					control={
-						<TTypography
-							sx={{ ml: 2, color: "text.secondary" }}
-							content={insuranceBase}
-						/>
-					}
 					sx={{ mb: 1 }}
+					control={
+						<Typography sx={{ ml: 2, color: "text.secondary" }}>
+							{formatNumber(configData.personalDeduction)} ₫
+						</Typography>
+					}
+				/>
+				<br />
+				<FormControlLabel
+					label={<TSpan className="label-constant" content="config.dependants-deduction.label" />}
+					labelPlacement="start"
+					sx={{ mb: 1 }}
+					control={
+						<Typography sx={{ ml: 2, color: "text.secondary" }}>
+							{formatNumber(configData.dependantsDeduction)} ₫
+						</Typography>
+					}
+				/>
+				<br />
+				<FormControlLabel
+					label={<TSpan className="label-constant" content="config.minimum-insurance.label" />}
+					labelPlacement="start"
+					sx={{ mb: 1 }}
+					control={
+						<Typography sx={{ ml: 2, color: "text.secondary" }}>
+							{insuranceBase}
+						</Typography>
+					}
 				/>
 				<br />
 				<FormControlLabel
@@ -147,70 +110,45 @@ export const Settings = (props: UpdateTaxConfig) => {
 				/>
 
 				<Box sx={{ mb: 2 }}>
-					{configData.taxSteps.map((step, index) => (
-						<Box
-							key={index}
+					<TableContainer component={Paper}>
+						<Table
+							size="small"
 							sx={{
-								display: "flex",
-								flexDirection: { xs: "column", sm: "row" },
-								justifyContent: "space-arround"
+								borderCollapse: "collapse",
+								"& th, & td": {
+									border: "1px solid",
+									borderColor: "divider",
+								},
 							}}
 						>
-							<NumberFormatField
-								value={step.max}
-								label={translate("config.tax-step-x.label").formatWithNumber(index + 1)}
-								placeholder={translate("config.tax-step-x.label").formatWithNumber(
-									index + 1
-								)}
-								end="₫"
-								handleUpdate={handleChange(`taxSteps[${index + 1}].max`)}
-							/>
-							&nbsp;&nbsp;
-							<NumberFormatField
-								value={step.rate * 100}
-								label={translate("config.tax-rate-x.label").formatWithNumber(index + 1)}
-								placeholder={translate("config.tax-rate-x.label").formatWithNumber(
-									index + 1
-								)}
-								end="%"
-								handleUpdate={handleChange(`taxSteps[${index + 1}].rate`)}
-							/>
-							<div className="remove-step">
-								<i
-									className="fas fa-times icon"
-									onClick={() => handleRemoveStep(index)}
-								/>
-							</div>
-						</Box>
-					))}
-					<TButton
-						size="small"
-						startIcon={<i className="fas fa-plus" />}
-						value="config.add-step.label"
-						onClick={handleAddStep}
-						disabled={configData.taxSteps.some(s => !s.max || !s.rate)}
-					/>
+							<TableHead>
+								<TableRow>
+									<TableCell align="center" width={100}>{translate("config.tax-level.label")}</TableCell>
+									<TableCell align="center" width={250}>{translate("config.tax-step.label")}</TableCell>
+									<TableCell align="center" width={180}>{translate("config.tax-rate.label")}</TableCell>
+								</TableRow>
+							</TableHead>
+
+							<TableBody>
+								{configData.taxSteps.map((step, index) => (
+									<TableRow key={index}>
+										<TableCell align="center">{index + 1}</TableCell>
+										<TableCell align="right">{formatNumber(step.max)} ₫</TableCell>
+										<TableCell align="right">{step.rate * 100} %</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</TableContainer>
 				</Box>
 
 				<Box sx={{
-					display: "flex",
-					justifyContent: "center",
-					flexDirection: { xs: "column", sm: "row" },
-					gap: 1
-				}}>
-					<TButton
-						variant="contained"
-						onClick={handleSave}
-						startIcon={<i className="far fa-save" />}
-						value="config.save.label"
-					/>
-					<TButton
-						variant="outlined"
-						color="info"
-						startIcon={<i className="fas fa-undo" />}
-						onClick={handleReset}
-						value="config.default.label"
-					/>
+						display: "flex",
+						justifyContent: "center",
+						flexDirection: { xs: "column", sm: "row" },
+						gap: 1
+					}}
+				>
 					<TButton
 						variant="outlined"
 						onClick={() => handleClose(null, "escapeKeyDown")}

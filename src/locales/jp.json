@@ -31,11 +31,8 @@
 		"calculate-button": {
 			"label": "{0} に計算します"
 		},
-		"setting-button": {
-			"label": "税金の設定"
-		},
 		"alert": {
-			"title": "通知"
+			"title": "給与と税金の詳細"
 		},
 		"answer": {
 			"row-1": "あなたの総収入は{0}₫です",
@@ -62,12 +59,10 @@
 	},
 	"config": {
 		"personal-deduction": {
-			"label": "個人控除",
-			"placeholder": "個人控除を入力"
+			"label": "個人控除"
 		},
 		"dependants-deduction": {
-			"label": "扶養控除",
-			"placeholder": "扶養控除を入力"
+			"label": "扶養控除"
 		},
 		"insurance-rate": {
 			"label": "保険料率"
@@ -75,20 +70,21 @@
 		"minimum-insurance": {
 			"label": "最低保険基盤"
 		},
-		"tax-step-x": {
-			"label": "税段階レベル {0}"
+		"policy": {
+			"label": "個人所得税政策",
+			"label1": "법률 제04/2007/QH12호",
+			"label2": "決議954/2020/UBTVQH14",
+			"label3": "決議110/2025/UBTVQH15",
+			"tooltip": "税制の詳細"
 		},
-		"tax-rate-x": {
-			"label": "税率レベル {0}"
+		"tax-level": {
+			"label": "税率"
 		},
-		"add-step": {
-			"label": "税金のステップを追加"
+		"tax-step": {
+			"label": "税金のステップ"
 		},
-		"save": {
-			"label": "保存"
-		},
-		"default": {
-			"label": "デフォルトにリセット"
+		"tax-rate": {
+			"label": "税率"
 		},
 		"close": {
 			"label": "閉じる"
