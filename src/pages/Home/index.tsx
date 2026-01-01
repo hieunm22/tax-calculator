@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { FocusEvent, useEffect, useState } from "react"
 import {
 	Box,
 	FormControl,
@@ -35,6 +35,7 @@ export default function Home() {
 	})
 	const [taxConfig, setTaxConfig] = useState<TaxConfig>(TAX_CONFIGS[1])
 	const [taxIndex, setTaxIndex] = useState<number>(1)
+	const [helpText, setHelpText] = useState<string>("")
 	useAutoTitle("home.header.label")
 
 	useEffect(() => {
@@ -57,6 +58,13 @@ export default function Home() {
 		if (field === "income" && formData.contributionLevel === "official") {
 			clone.contributionAmount = str
 		}
+		setFormData(clone)
+	}
+
+	const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+		setHelpText(!e.target.value ? "constant.is-required" : "")
+		const clone = structuredClone(formData)
+		clone.dependents = e.target.value
 		setFormData(clone)
 	}
 
@@ -142,13 +150,15 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 						placeholder="home.dependents.placeholder"
 						type="number"
 						sx={{ my: 2 }}
+						error={!!helpText}
+						helperText={translate(helpText)}
 						slotProps={{
 							input: {
 								endAdornment: <i className="fa fa-user" />,
 							},
 							htmlInput: { min: 0, max: 24, step: 1 }
 						}}
-						onBlur={e => handleChange("dependents")(e.target.value)}
+						onBlur={handleBlur}
 					/>
 				</Box>
 			</Box>
@@ -198,7 +208,7 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 					sx={{ mb: 1, fontWeight: 500 }}
 				/>
 				<Select
-					size="small"
+					size="medium"
 					sx={{ minWidth: "calc(100% - 52px)" }}
 					variant="standard"
 					labelId="dropdown-label"
