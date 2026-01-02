@@ -26,15 +26,15 @@ import "./Home.scss"
 export default function Home() {
 	const { dispatch } = useToolkit()
 	const alertPopup = useAlert()
+	const [taxIndex, setTaxIndex] = useState<number>(1)
+	const [taxConfig, setTaxConfig] = useState<TaxConfig>(TAX_CONFIGS[1])
 	const [formData, setFormData] = useState<TaxFormData>({
 		income: "",
 		dependents: "",
 		contributionLevel: "other",
 		targetType: "net",
-		contributionAmount: "5310000"
+		contributionAmount: taxConfig.minimumInsuranceBase.toString()
 	})
-	const [taxConfig, setTaxConfig] = useState<TaxConfig>(TAX_CONFIGS[1])
-	const [taxIndex, setTaxIndex] = useState<number>(1)
 	const [helpText, setHelpText] = useState<string>("")
 	useAutoTitle("home.header.label")
 
@@ -48,8 +48,13 @@ export default function Home() {
 	}, [])
 
 	useEffect(() => {
-		setTaxConfig(TAX_CONFIGS[taxIndex])
+		const newTaxConfig = TAX_CONFIGS[taxIndex]
+		setTaxConfig(newTaxConfig)
 		localStorage.setItem(LS_TAX_CONFIG, taxIndex.toString())
+
+		const clone = structuredClone(formData)
+		clone.contributionAmount = newTaxConfig.minimumInsuranceBase.toString()
+		setFormData(clone)
 	}, [taxIndex])
 
 	const handleChange = (field: string) => (str: string) => {
