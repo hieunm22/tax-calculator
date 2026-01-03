@@ -18,6 +18,12 @@ export default function NumberFormatField(props: NumberFormatProps & TextFieldPr
 		}
 	}, [props.value])
 
+	useEffect(() => {
+		if (displayValue !== "") {
+			setHelpText("")
+		}
+	}, [displayValue])
+
 	const handleBlur = () => {
 		const formatValue = formatNumber(Number(realValue))
 		setDisplayValue(formatValue)

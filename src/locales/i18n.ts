@@ -4,13 +4,15 @@ import en from "./en.json"
 import vi from "./vi.json"
 import jp from "./jp.json"
 import kr from "./kr.json"
+import cn from "./cn.json"
 
 i18n.use(initReactI18next).init({
 	resources: {
 		en: { translation: en },
 		vi: { translation: vi },
 		jp: { translation: jp },
-		kr: { translation: kr }
+		kr: { translation: kr },
+		cn: { translation: cn }
 	},
 	detection: {
 		lookupLocalStorage: "language",
@@ -18,7 +20,7 @@ i18n.use(initReactI18next).init({
 	},
 	// cache user language on
 	cache: ["localStorage"],
-	fallbackLng: "en",
+	fallbackLng: "vi",
 	interpolation: {
 		escapeValue: false
 	}

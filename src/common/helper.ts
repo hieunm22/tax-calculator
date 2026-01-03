@@ -10,7 +10,7 @@ String.prototype.formatWithNumber = function (...args: number[]) {
 	})
 }
 
-export 	const formatNumber = (num: number) => {
+export const formatNumber = (num: number) => {
 	if (!num) return ""
 	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }

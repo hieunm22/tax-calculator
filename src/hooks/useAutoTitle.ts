@@ -11,8 +11,8 @@ export default function useAutoTitle(titleKey: string) {
 		if (isValidLang) {
 			i18n.changeLanguage(lsLang)
 		} else {
-			localStorage.setItem(LS_LANGUAGE, "en")
-			i18n.changeLanguage("en")
+			localStorage.setItem(LS_LANGUAGE, "vi")
+			i18n.changeLanguage("vi")
 		}
 	}, [])
 

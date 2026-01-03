@@ -2,18 +2,19 @@ import { useEffect, useState } from "react"
 import {
 	Box,
 	Dialog,
+	DialogActions,
 	DialogContent,
 	DialogTitle,
 	Divider,
-	FormControlLabel,
 	Paper,
+	SxProps,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
-	Typography
+	Theme
 } from "@mui/material"
 import { TAX_CONFIGS, LS_LANGUAGE, LS_TAX_CONFIG } from "common/constants"
 import { TButton, TSpan, TTypography } from "components/TranslationTag"
@@ -55,61 +56,60 @@ export const Settings = () => {
 	const insuranceBase = formatNumber(configData.minimumInsuranceBase) + " ₫"
 	const insuranceRate = configData.insuranceRate * 100 + " %"
 
+	const sxValue = { p: 1, color: "text.secondary", textAlign: "right" } as SxProps<Theme>
+
 	return (
-		<Dialog open={state.activePopup === 1} onClose={handleClose}>
-			<DialogTitle padding="5px 20px !important" width={350}>
+		<Dialog
+			open={state.activePopup === 1}
+			onClose={handleClose}
+			sx={{
+				'& .MuiDialog-paper': {
+					borderRadius: 3,
+					margin: "0 10px",
+				},
+			}}
+		>
+			<DialogTitle className="dialog-title" padding="5px 20px !important" width={350}>
 				{translate("config.policy.label" + (taxIndex + 1))}
 			</DialogTitle>
-			<Divider sx={{ my: "5px" }} />
+			<Divider sx={{ my: "5px", overflowY: "scroll" }} />
 			<DialogContent className="dialog-content">
-				<FormControlLabel
-					label={<TSpan className="label-constant" content="config.personal-deduction.label" />}
-					labelPlacement="start"
-					sx={{ mb: 1 }}
-					control={
-						<Typography sx={{ ml: 2, color: "text.secondary" }}>
-							{formatNumber(configData.personalDeduction)} ₫
-						</Typography>
-					}
-				/>
-				<br />
-				<FormControlLabel
-					label={<TSpan className="label-constant" content="config.dependants-deduction.label" />}
-					labelPlacement="start"
-					sx={{ mb: 1 }}
-					control={
-						<Typography sx={{ ml: 2, color: "text.secondary" }}>
-							{formatNumber(configData.dependantsDeduction)} ₫
-						</Typography>
-					}
-				/>
-				<br />
-				<FormControlLabel
-					label={<TSpan className="label-constant" content="config.minimum-insurance.label" />}
-					labelPlacement="start"
-					sx={{ mb: 1 }}
-					control={
-						<Typography sx={{ ml: 2, color: "text.secondary" }}>
-							{insuranceBase}
-						</Typography>
-					}
-				/>
-				<br />
-				<FormControlLabel
-					label={
-						<TSpan className="label-constant" content="config.insurance-rate.label" />
-					}
-					labelPlacement="start"
-					control={
-						<TTypography
-							sx={{ ml: 2, color: "text.secondary" }}
-							content={insuranceRate}
-						/>
-					}
-					sx={{ mb: 1 }}
-				/>
+				<Box
+					sx={{
+						display: "grid",
+						gridTemplateColumns: "13fr 7fr",
+					}}
+				>
+					<Box sx={{ p: 1 }}>
+						{translate("config.personal-deduction.label")}
+					</Box>
+					<Box sx={sxValue}>
+						{formatNumber(configData.personalDeduction)} ₫
+					</Box>
 
-				<Box sx={{ mb: 2 }}>
+					<Box sx={{ p: 1 }}>
+						{translate("config.dependants-deduction.label")}
+					</Box>
+					<Box sx={sxValue}>
+						{formatNumber(configData.dependantsDeduction)} ₫
+					</Box>
+
+					<Box sx={{ p: 1 }}>
+						{translate("config.minimum-insurance.label")}
+					</Box>
+					<Box sx={sxValue}>
+						{insuranceBase}
+					</Box>
+
+					<Box sx={{ p: 1 }}>
+						{translate("config.insurance-rate.label")}
+					</Box>
+					<Box sx={sxValue}>
+						{insuranceRate}
+					</Box>
+				</Box>
+
+				<Box>
 					<TableContainer component={Paper}>
 						<Table
 							size="small"
@@ -141,21 +141,17 @@ export const Settings = () => {
 						</Table>
 					</TableContainer>
 				</Box>
-
-				<Box sx={{
-						display: "flex",
-						justifyContent: "center",
-						flexDirection: { xs: "column", sm: "row" },
-						gap: 1
-					}}
-				>
-					<TButton
-						variant="outlined"
-						onClick={() => handleClose(null, "escapeKeyDown")}
-						value="config.close.label"
-					/>
-				</Box>
 			</DialogContent>
+			<DialogActions sx={{
+				display: "flex",
+				justifyContent: "center"
+			}}>
+				<TButton
+					variant="outlined"
+					onClick={() => handleClose(null, "escapeKeyDown")}
+					value="config.close.label"
+				/>
+			</DialogActions>
 		</Dialog>
 	)
 }

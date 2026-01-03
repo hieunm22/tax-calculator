@@ -24,8 +24,7 @@ export const COUNTRIES_DROPDOWN = [
 	{
 		key: "cn",
 		icon: "https://cdn.jsdelivr.net/npm/twemoji@latest/2/svg/1f1e8-1f1f3.svg",
-		value: "中国人 (Chinese)",
-		disabled: true
+		value: "中国人 (Chinese)"
 	}
 ]
 export const LS_DARKMODE = "dark-mode"
@@ -36,7 +35,7 @@ const INIT_TAX_CONFIG_07: TaxConfig = {
 	personalDeduction: 9000000,
 	dependantsDeduction: 3600000,
 	insuranceRate: 0.105,
-	minimumInsuranceBase: 5310000,
+	minimumInsuranceBase: 2700000,
 	taxSteps: [
 		{ max: 5000000, rate: 0.05 },
 		{ max: 10000000, rate: 0.1 },
@@ -52,7 +51,7 @@ const INIT_TAX_CONFIG_20: TaxConfig = {
 	personalDeduction: 11000000,
 	dependantsDeduction: 4400000,
 	insuranceRate: 0.105,
-	minimumInsuranceBase: 5310000,
+	minimumInsuranceBase: 4960000,
 	taxSteps: [
 		{ max: 5000000, rate: 0.05 },
 		{ max: 10000000, rate: 0.1 },

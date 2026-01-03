@@ -13,6 +13,17 @@
 	font-weight: 600 !important;
 }
 
+.dialog-title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 100% !important;
+}
+
+.dialog-content {
+	padding: 10px !important;
+}
+
 .label-constant {
 	margin-left: -17px;
 }
