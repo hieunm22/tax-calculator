@@ -27,7 +27,7 @@ export default function Home() {
 	const { dispatch } = useToolkit()
 	const alertPopup = useAlert()
 	const [taxIndex, setTaxIndex] = useState<number>(1)
-	const [taxConfig, setTaxConfig] = useState<TaxConfig>(TAX_CONFIGS[1])
+	const [taxConfig, setTaxConfig] = useState<TaxConfig>(TAX_CONFIGS[taxIndex])
 	const [formData, setFormData] = useState<TaxFormData>({
 		income: "",
 		dependents: "",
@@ -40,7 +40,7 @@ export default function Home() {
 
 	useEffect(() => {
 		const taxConfigStr = localStorage.getItem(LS_TAX_CONFIG)
-		if (taxConfigStr) {
+		if (taxConfigStr && Number.isInteger(taxConfigStr)) {
 			setTaxIndex(Number(taxConfigStr))
 		} else {
 			localStorage.setItem(LS_TAX_CONFIG, "1")
@@ -53,7 +53,10 @@ export default function Home() {
 		localStorage.setItem(LS_TAX_CONFIG, taxIndex.toString())
 
 		const clone = structuredClone(formData)
-		clone.contributionAmount = newTaxConfig.minimumInsuranceBase.toString()
+		if (formData.contributionLevel === "other")
+			clone.contributionAmount = newTaxConfig.minimumInsuranceBase.toString()
+		else if (formData.contributionLevel === "official")
+			clone.contributionAmount = clone.income
 		setFormData(clone)
 	}, [taxIndex])
 
