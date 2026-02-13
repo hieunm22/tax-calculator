@@ -17,7 +17,9 @@
 		"contribution-level": {
 			"label": "拠出額",
 			"official": "公務員給与",
-			"other": "その他"
+			"rate": "公式給与とレート",
+			"rate-label": "保険金額率",
+			"other": "オプション"
 		},
 		"contribution-amount": {
 			"label": "拠出額",

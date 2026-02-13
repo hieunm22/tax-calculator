@@ -6,4 +6,6 @@ export interface NumberFormatProps {
 	label: string
 	end: JSX.Element | string
 	handleUpdate?: StringChanged
+	min?: number
+	max?: number
 }

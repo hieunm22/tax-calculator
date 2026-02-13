@@ -3,6 +3,7 @@ export interface TaxFormData {
 	dependents: string
 	contributionLevel: string
 	contributionAmount: string
+	contributionRate: string
 	targetType: string
 }
 
@@ -17,4 +18,10 @@ export interface TaxConfig {
 	insuranceRate: number
 	minimumInsuranceBase: number
 	taxSteps: TaxStep[]
+}
+
+export interface ContributionAmountProps {
+	formData: TaxFormData
+	handleChange: (field: keyof TaxFormData) => (value: string) => void
+	taxConfig: TaxConfig
 }

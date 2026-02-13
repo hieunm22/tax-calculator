@@ -17,7 +17,9 @@
 		"contribution-level": {
 			"label": "繳費等級",
 			"official": "以正式工資計算",
-			"other": "其他"
+			"rate": "按官方薪資標準",
+			"rate-label": "保险金额费率",
+			"other": "选项"
 		},
 		"contribution-amount": {
 			"label": "繳費金額",

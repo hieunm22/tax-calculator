@@ -7,13 +7,15 @@ import {
 	Radio,
 	Paper,
 	Select,
-	MenuItem
+	MenuItem,
+	InputLabel,
+	FormLabel
 } from "@mui/material"
 import { TAX_CONFIGS, LS_TAX_CONFIG } from "common/constants"
 import { useAlert } from "components/AlertProvider"
 import NumberFormatField from "components/NumberFormatField"
 import { TButton, TI, TTextField, TTypography } from "components/TranslationTag"
-import { Settings } from "./components"
+import { ContributionAmountInput, Settings } from "./components"
 import { translate } from "locales/translate"
 import { showPopup } from "toolkit/slice"
 import useAutoTitle from "hooks/useAutoTitle"
@@ -26,13 +28,14 @@ import "./Home.scss"
 export default function Home() {
 	const { dispatch } = useToolkit()
 	const alertPopup = useAlert()
-	const [taxIndex, setTaxIndex] = useState<number>(1)
-	const [taxConfig, setTaxConfig] = useState<TaxConfig>(TAX_CONFIGS[taxIndex])
+	const [taxIndex, setTaxIndex] = useState<number>(-1)
+	const [taxConfig, setTaxConfig] = useState<TaxConfig>(TAX_CONFIGS[1])
 	const [formData, setFormData] = useState<TaxFormData>({
 		income: "",
 		dependents: "",
 		contributionLevel: "other",
 		targetType: "net",
+		contributionRate: "99",
 		contributionAmount: taxConfig.minimumInsuranceBase.toString()
 	})
 	const [helpText, setHelpText] = useState<string>("")
@@ -40,15 +43,18 @@ export default function Home() {
 
 	useEffect(() => {
 		const taxConfigStr = localStorage.getItem(LS_TAX_CONFIG)
-		if (taxConfigStr && Number.isInteger(taxConfigStr)) {
+		if (taxConfigStr && /^\d$/.test(taxConfigStr)) {
 			setTaxIndex(Number(taxConfigStr))
-		} else {
-			localStorage.setItem(LS_TAX_CONFIG, "1")
+			return
 		}
+
+		setTaxIndex(1)
+		localStorage.setItem(LS_TAX_CONFIG, "1")
 	}, [])
 
 	useEffect(() => {
 		const newTaxConfig = TAX_CONFIGS[taxIndex]
+		if (!newTaxConfig) return
 		setTaxConfig(newTaxConfig)
 		localStorage.setItem(LS_TAX_CONFIG, taxIndex.toString())
 
@@ -66,6 +72,10 @@ export default function Home() {
 		if (field === "income" && formData.contributionLevel === "official") {
 			clone.contributionAmount = str
 		}
+		if (field === "contributionRate" && formData.contributionLevel === "rate") {
+			const amount = (Number(formData.income) * Number(str) / 100).toString()
+			clone.contributionAmount = amount
+		}
 		setFormData(clone)
 	}
 
@@ -76,13 +86,19 @@ export default function Home() {
 		setFormData(clone)
 	}
 
-	const handleChangeRadio = (field: string) => (e: any) => {
+	const handleChangeLevel = (field: string) => (e: any) => {
 		const clone = structuredClone(formData)
 		clone[field as keyof TaxFormData] = e.target.value
-		if (field === "contributionLevel" && e.target.value === "official") {
+		if (field === "contributionLevel" && e.target.value === "official" && formData.income) {
 			clone.contributionAmount = clone.income
-		} else if (field === "contributionLevel" && e.target.value === "other") {
-			clone.contributionAmount = taxConfig.minimumInsuranceBase.toString()
+		} else if (field === "contributionLevel") {
+			if (e.target.value === "other") {
+				clone.contributionAmount = taxConfig.minimumInsuranceBase.toString()
+			} else if (e.target.value === "rate") {
+				clone.contributionAmount = (Number(formData.income) * Number(formData.contributionRate) / 100).toString()
+			} else if (e.target.value === "official" && formData.income) {
+				clone.contributionAmount = clone.income
+			}
 		}
 
 		setFormData(clone)
@@ -97,9 +113,12 @@ export default function Home() {
 		const formNumbers = Object.values(formData)
 			.map(Number)
 			.filter(num => !isNaN(num))
-		const [totalIncome, dependents, contributionAmount] = formNumbers
+		const [totalIncome, dependents, contributionRate, contributionAmount] = formNumbers
 		const totalDeductions = taxConfig.personalDeduction + dependents * taxConfig.dependantsDeduction
-		const insuranceAmount = contributionAmount * taxConfig.insuranceRate
+		const realContributionAmount = formData.contributionLevel === "rate"
+			? totalIncome * (contributionRate / 100)
+			: contributionAmount
+		const insuranceAmount = realContributionAmount * taxConfig.insuranceRate
 
 		// calculate taxable income
 		const taxableIncome = totalIncome - insuranceAmount - totalDeductions
@@ -121,11 +140,14 @@ ${translate("home.answer.row-6").formatWithNumber(net)}`
 		const formNumbers = Object.values(formData)
 			.map(Number)
 			.filter(num => !isNaN(num))
-		const [netSalary, dependents, contributionAmount] = formNumbers
+		const [netSalary, dependents, contributionRate, contributionAmount] = formNumbers
 
 		// calculate gross salary
 		const gross = calcGross(netSalary, dependents, contributionAmount, taxConfig)
-		const insuranceAmount = contributionAmount * taxConfig.insuranceRate
+		const realContributionAmount = formData.contributionLevel === "rate"
+			? netSalary * (contributionRate / 100)
+			: contributionAmount
+		const insuranceAmount = realContributionAmount * taxConfig.insuranceRate
 		const totalDeductions = taxConfig.personalDeduction + dependents * taxConfig.dependantsDeduction
 
 		await alertPopup(
@@ -148,7 +170,7 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 						fullWidth
 						label="home.income.label"
 						placeholder="home.income.placeholder"
-						end="₫"
+						end={<i className="far fa-dong-sign" />}
 						handleUpdate={handleChange("income")}
 					/>
 					<TTextField
@@ -157,7 +179,7 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 						label="home.dependents.label"
 						placeholder="home.dependents.placeholder"
 						type="number"
-						sx={{ my: 2 }}
+						sx={{ my: 1 }}
 						error={!!helpText}
 						helperText={translate(helpText)}
 						slotProps={{
@@ -171,76 +193,82 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 				</Box>
 			</Box>
 
-			<Box sx={{ mb: 2 }}>
-				<TTypography
-					content="home.contribution-level.label"
-					variant="subtitle1"
-					sx={{ mb: 1, fontWeight: 500 }}
-				/>
-				<FormControl component="fieldset">
-					<RadioGroup
+			<Box sx={{ mb: 1 }}>
+				<FormControl
+					fullWidth
+					size="small"
+					variant="outlined"
+				>
+					<InputLabel id="contribution-level-label" sx={{ ml: -1.6, my: 1 }}>
+						{translate("home.contribution-level.label")}
+					</InputLabel>
+					<Select
+						size="medium"
+						fullWidth
+						variant="standard"
+						disabled={!formData.income}
+						labelId="dropdown-label"
 						value={formData.contributionLevel}
-						onChange={handleChangeRadio("contributionLevel")}
+						onChange={handleChangeLevel("contributionLevel")}
 					>
-						<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-							<FormControlLabel
-								value="other"
-								control={<Radio />}
-								label={translate("home.contribution-level.other")}
-							/>
-							{formData.contributionLevel === "other" && (
-								<NumberFormatField
-									value={formData.contributionAmount}
-									label="home.contribution-amount.label"
-									placeholder={translate(
-										"home.contribution-amount.placeholder"
-									).formatWithNumber(taxConfig.minimumInsuranceBase)}
-									end="₫"
-									handleUpdate={handleChange("contributionAmount")}
-								/>
-							)}
-						</Box>
-						<FormControlLabel
-							value="official"
-							control={<Radio />}
-							label={translate("home.contribution-level.official")}
-						/>
-					</RadioGroup>
+						<MenuItem value="other">{translate("home.contribution-level.other")}</MenuItem>
+						<MenuItem value="official">{translate("home.contribution-level.official")}</MenuItem>
+						<MenuItem value="rate">{translate("home.contribution-level.rate")}</MenuItem>
+					</Select>
 				</FormControl>
+				<ContributionAmountInput
+					formData={formData}
+					handleChange={handleChange}
+					taxConfig={taxConfig}
+				/>
 			</Box>
 
 			<Box sx={{ mb: 2 }}>
-				<TTypography
-					content="config.policy.label"
-					variant="subtitle1"
-					sx={{ mb: 1, fontWeight: 500 }}
-				/>
-				<Select
-					size="medium"
-					sx={{ minWidth: "calc(100% - 52px)" }}
-					variant="standard"
-					labelId="dropdown-label"
-					value={taxIndex}
-					onChange={e => setTaxIndex(e.target.value)}
+				<FormControl
+					sx={{ minWidth: "calc(100% - 36px)" }}
+					size="small"
+					variant="outlined"
 				>
-					<MenuItem value={0}>{translate("config.policy.label1")}</MenuItem>
-					<MenuItem value={1}>{translate("config.policy.label2")}</MenuItem>
-					<MenuItem value={2}>{translate("config.policy.label3")}</MenuItem>
-				</Select>
+					<InputLabel id="contribution-level-label" sx={{ ml: -1.6, my: 1 }}>
+						{translate("config.policy.label")}
+					</InputLabel>
+					<Select
+						size="medium"
+						variant="standard"
+						labelId="dropdown-label"
+						value={taxIndex}
+						onChange={e => setTaxIndex(e.target.value)}
+					>
+						<MenuItem value={0}>{translate("config.policy.label1")}</MenuItem>
+						<MenuItem value={1}>{translate("config.policy.label2")}</MenuItem>
+						<MenuItem value={2}>{translate("config.policy.label3")}</MenuItem>
+					</Select>
+				</FormControl>
 				<TI
 					className="far fa-info-circle info"
 					title="config.policy.tooltip"
 					onClick={handleShowSetting}
+					style={{ marginTop: 20 }}
 				/>
 			</Box>
 
 			<Box sx={{ mb: 2 }}>
-				<TTypography content="home.target-type.label" variant="subtitle1" />
-				<FormControl component="fieldset">
+				<FormControl>
+					<FormLabel id="contribution-level-label"
+						sx={{
+							fontSize: "0.75rem",
+							color: "text.secondary",
+							"&.Mui-focused": {
+								color: "primary.main",
+							}
+						}}
+					>
+						{translate("config.policy.label")}
+					</FormLabel>
 					<RadioGroup
 						sx={{ flexDirection: "row" }}
 						value={formData.targetType}
-						onChange={handleChangeRadio("targetType")}
+						onChange={handleChangeLevel("targetType")}
 					>
 						<FormControlLabel
 							value="net"

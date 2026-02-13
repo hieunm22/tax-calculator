@@ -34,6 +34,9 @@ export default function NumberFormatField(props: NumberFormatProps & TextFieldPr
 	const unformat = (val: string) => val.replace(/\D/g, "")
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const raw = unformat(e.target.value)
+		const value = Number(raw)
+		if (props.max !== undefined && value > props.max) return
+		if (props.min !== undefined && raw !== "" && value < props.min) return
 		setRealValue(raw)
 		setDisplayValue(raw)
 	}

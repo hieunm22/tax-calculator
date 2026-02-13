@@ -17,13 +17,14 @@ import {
 	Theme
 } from "@mui/material"
 import { TAX_CONFIGS, LS_LANGUAGE, LS_TAX_CONFIG } from "common/constants"
-import { TButton, TSpan, TTypography } from "components/TranslationTag"
+import { TButton } from "components/TranslationTag"
 import { translate } from "locales/translate"
 import i18n from "locales/i18n"
 import useToolkit from "hooks/useToolkit"
 import { showPopup } from "toolkit/slice"
 import { formatNumber } from "common/helper"
-import { TaxConfig } from "./types"
+import { ContributionAmountProps, TaxConfig } from "./types"
+import NumberFormatField from "@/components/NumberFormatField"
 
 export const Settings = () => {
 	const { state, dispatch } = useToolkit()
@@ -153,5 +154,42 @@ export const Settings = () => {
 				/>
 			</DialogActions>
 		</Dialog>
+	)
+}
+
+export const ContributionAmountInput = (props: ContributionAmountProps) => {
+	const { formData, taxConfig, handleChange } = props
+
+	return (
+		<Box
+			sx={{
+				display: "flex",
+				flexDirection: { xs: "column", sm: "row" },
+				justifyContent: "space-between",
+				gap: 2
+			}}
+		>
+			<NumberFormatField
+				value={formData.contributionAmount}
+				label="home.contribution-amount.label"
+				placeholder={translate(
+					"home.contribution-amount.placeholder"
+				).formatWithNumber(taxConfig.minimumInsuranceBase)}
+				sx={{ mt: 2 }}
+				disabled={formData.contributionLevel !== "other"}
+				end={<i className="far fa-dong-sign" />}
+				handleUpdate={handleChange("contributionAmount")}
+			/>
+			{formData.contributionLevel === "rate" && <NumberFormatField
+				value={formData.contributionRate}
+				label="home.contribution-level.rate-label"
+				placeholder="0 - 99%"
+				sx={{ mt: 2 }}
+				end={<i className="far fa-percent" />}
+				handleUpdate={handleChange("contributionRate")}
+				min={formData.contributionLevel === "rate" ? 0 : undefined}
+				max={formData.contributionLevel === "rate" ? 99 : undefined}
+			/>}
+		</Box>
 	)
 }

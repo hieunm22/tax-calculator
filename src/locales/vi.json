@@ -17,7 +17,9 @@
 		"contribution-level": {
 			"label": "Mức lương đóng bảo hiểm",
 			"official": "Trên lương chính thức",
-			"other": "Khác"
+			"rate": "Trên tỷ lệ với lương chính thức",
+			"rate-label": "Tỷ lệ đóng bảo hiểm",
+			"other": "Tuỳ chọn"
 		},
 		"contribution-amount": {
 			"label": "Mức lương đóng bảo hiểm",

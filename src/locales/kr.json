@@ -17,7 +17,9 @@
 		"contribution-level": {
 			"label": "보험료 납부 수준",
 			"official": "공무원 급여 초과",
-			"other": "기타"
+			"rate": "공식 급여 지급 기준",
+			"rate-label": "보험금액 비율",
+			"other": "옵션"
 		},
 		"contribution-amount": {
 			"label": "보험료 납부 수준",

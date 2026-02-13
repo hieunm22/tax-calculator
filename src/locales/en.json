@@ -17,7 +17,9 @@
 		"contribution-level": {
 			"label": "Contribution level",
 			"official": "On official salary",
-			"other": "Other"
+			"rate": "On official salary with rate",
+			"rate-label": "Insurance amount rate",
+			"other": "Custom"
 		},
 		"contribution-amount": {
 			"label": "Contribution amount",
