@@ -161,21 +161,14 @@ export const ContributionAmountInput = (props: ContributionAmountProps) => {
 	const { formData, taxConfig, handleChange } = props
 
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: { xs: "column", sm: "row" },
-				justifyContent: "space-between",
-				gap: 2
-			}}
-		>
+		<Box>
 			<NumberFormatField
 				value={formData.contributionAmount}
 				label="home.contribution-amount.label"
 				placeholder={translate(
 					"home.contribution-amount.placeholder"
 				).formatWithNumber(taxConfig.minimumInsuranceBase)}
-				sx={{ mt: 2 }}
+				sx={{ mt: 2, mr: 2 }}
 				disabled={formData.contributionLevel !== "other"}
 				end={<i className="far fa-dong-sign" />}
 				handleUpdate={handleChange("contributionAmount")}
