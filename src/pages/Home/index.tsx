@@ -263,7 +263,7 @@ ${translate("home.answer.row-6").formatWithNumber(netSalary)}`
 							}
 						}}
 					>
-						{translate("config.policy.label")}
+						{translate("home.target-type.label")}
 					</FormLabel>
 					<RadioGroup
 						sx={{ flexDirection: "row" }}
