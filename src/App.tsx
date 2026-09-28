@@ -6,7 +6,6 @@ import {
 	ThemeProvider,
 	type PaletteMode
 } from "@mui/material"
-import { LS_DARKMODE } from "./common/constants"
 import { AlertProvider } from "./components/AlertProvider"
 import PublicRoute from "./components/PublicRoute"
 import Home from "./pages/Home"
@@ -14,43 +13,44 @@ import useToolkit from "./hooks/useToolkit"
 import "./style/responsive.scss"
 
 function App() {
-	const darkMode = localStorage.getItem(LS_DARKMODE) || "light"
 	const { state } = useToolkit()
+	const mode: PaletteMode = state.darkMode ? "dark" : "light"
 
-	const createThemeCallback = () =>
-		createTheme({
-			typography: {
-				fontSize: 14
-			},
-			components: {
-				MuiButton: {
-					styleOverrides: {
-						root: {
-							textTransform: "none"
+	const theme = useMemo(
+		() =>
+			createTheme({
+				typography: {
+					fontSize: 14
+				},
+				components: {
+					MuiButton: {
+						styleOverrides: {
+							root: {
+								textTransform: "none"
+							}
+						}
+					},
+					MuiInputBase: {
+						styleOverrides: {
+							root: {
+								fontSize: "14px"
+							}
+						}
+					},
+					MuiListItemText: {
+						styleOverrides: {
+							primary: {
+								fontSize: "14px"
+							}
 						}
 					}
 				},
-				MuiInputBase: {
-					styleOverrides: {
-						root: {
-							fontSize: "14px"
-						}
-					}
-				},
-				MuiListItemText: {
-					styleOverrides: {
-						primary: {
-							fontSize: "14px"
-						}
-					}
+				palette: {
+					mode
 				}
-			},
-			palette: {
-				mode: darkMode as PaletteMode
-			}
-		})
-
-	const theme = useMemo(createThemeCallback, [state.darkMode])
+			}),
+		[mode]
+	)
 
 	return (
 		<ThemeProvider theme={theme}>

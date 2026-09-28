@@ -24,3 +24,6 @@ tsconfig.tsbuildinfo
 *.njsproj
 *.sln
 *.sw?
+
+# python venv for the language generator
+src/locales/.venv

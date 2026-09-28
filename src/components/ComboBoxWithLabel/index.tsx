@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import {
 	FormControl,
 	FormHelperText,
@@ -13,15 +12,8 @@ import { ComboBoxWithLabelProps } from "./types"
 import "./ComboBoxWithLabel.scss"
 
 export const ComboBoxWithLabel = (props: ComboBoxWithLabelProps) => {
-	const [value, setValue] = useState("")
-
-	useEffect(() => {
-		setValue(props.value)
-	}, [props.value])
-
 	const handleChange = (e: any) => {
-		setValue(e.target.value)
-		props.change && props.change(e)
+		props.change?.(e)
 	}
 
 	return (
@@ -35,7 +27,7 @@ export const ComboBoxWithLabel = (props: ComboBoxWithLabelProps) => {
 				<Select
 					name={props.id}
 					labelId="language-label"
-					value={value}
+					value={props.value}
 					onBlur={props.blur}
 					onChange={handleChange}
 				>

@@ -18,9 +18,9 @@ export const CheckBoxWithLabel = (props: CheckBoxWithLabelProps) => {
 	const onSwitchChanged = (_: ChangeEvent<HTMLInputElement>, newValue: boolean) => {
 		setCheck(newValue)
 		if (newValue) {
-			enableEvent && enableEvent()
+			enableEvent?.()
 		} else {
-			disableEvent && disableEvent()
+			disableEvent?.()
 		}
 	}
 

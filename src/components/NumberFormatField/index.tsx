@@ -1,34 +1,36 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { TextField, TextFieldProps } from "@mui/material"
-import { translate } from "locales/translate"
 import { formatNumber } from "common/helper"
+import { translate } from "locales/translate"
 import type { NumberFormatProps } from "./types"
 
 export default function NumberFormatField(props: NumberFormatProps & TextFieldProps) {
-	const [displayValue, setDisplayValue] = useState("")
+	const [syncedValue, setSyncedValue] = useState(props.value)
+	const [displayValue, setDisplayValue] = useState(formatNumber(Number(props.value)))
 	const [helpText, setHelpText] = useState("")
-	const [realValue, setRealValue] = useState("")
+	const [realValue, setRealValue] = useState(props.value ? props.value.toString() : "")
 
-	useEffect(() => {
+	// re-sync from the parent during render when it pushes a new value
+	if (props.value !== syncedValue) {
+		setSyncedValue(props.value)
 		if (props.value) {
-			setRealValue(props.value.toString())
-
 			const formatValue = formatNumber(Number(props.value))
+			setRealValue(props.value.toString())
 			setDisplayValue(formatValue)
-		}
-	}, [props.value])
-
-	useEffect(() => {
-		if (displayValue !== "") {
 			setHelpText("")
 		}
-	}, [displayValue])
+	}
+
+	const showValue = (value: string) => {
+		setDisplayValue(value)
+		if (value !== "") setHelpText("")
+	}
 
 	const handleBlur = () => {
 		const formatValue = formatNumber(Number(realValue))
 		setDisplayValue(formatValue)
 		setHelpText(!realValue ? "constant.is-required" : "")
-		props.handleUpdate && props.handleUpdate(realValue)
+		props.handleUpdate?.(realValue)
 	}
 
 	const unformat = (val: string) => val.replace(/\D/g, "")
@@ -38,11 +40,11 @@ export default function NumberFormatField(props: NumberFormatProps & TextFieldPr
 		if (props.max !== undefined && value > props.max) return
 		if (props.min !== undefined && raw !== "" && value < props.min) return
 		setRealValue(raw)
-		setDisplayValue(raw)
+		showValue(raw)
 	}
 
 	const handleFocus = () => {
-		setDisplayValue(realValue)
+		showValue(realValue)
 	}
 
 	return (

@@ -10,7 +10,6 @@ import {
 } from "@mui/material"
 import { translate as t } from "../../locales/translate"
 import {
-	TButtonProps,
 	TDivProps,
 	TInputProps,
 	TIProps,

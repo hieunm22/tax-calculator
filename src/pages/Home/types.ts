@@ -20,6 +20,10 @@ export interface TaxConfig {
 	taxSteps: TaxStep[]
 }
 
+export interface SettingsProps {
+	taxIndex: number
+}
+
 export interface ContributionAmountProps {
 	formData: TaxFormData
 	handleChange: (field: keyof TaxFormData) => (value: string) => void

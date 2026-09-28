@@ -1,17 +1,24 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
-		"baseUrl": "src",
 		"paths": {
-			"@/*": ["*"],
-			"assets/*": ["assets/*"],
-			"common/*": ["common/*"],
-			"components/*": ["components/*"],
-			"hooks/*": ["hooks/*"],
-			"locales/*": ["locales/*"],
-			"pages/*": ["pages/*"],
-			"toolkit/*": ["toolkit/*"],
-			"types/*": ["types/*"]
+			"@/*": ["./src/*"],
+			"assets": ["./src/assets"],
+			"assets/*": ["./src/assets/*"],
+			"common": ["./src/common"],
+			"common/*": ["./src/common/*"],
+			"components": ["./src/components"],
+			"components/*": ["./src/components/*"],
+			"hooks": ["./src/hooks"],
+			"hooks/*": ["./src/hooks/*"],
+			"locales": ["./src/locales"],
+			"locales/*": ["./src/locales/*"],
+			"pages": ["./src/pages"],
+			"pages/*": ["./src/pages/*"],
+			"toolkit": ["./src/toolkit"],
+			"toolkit/*": ["./src/toolkit/*"],
+			"types": ["./src/types"],
+			"types/*": ["./src/types/*"]
 		},
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
@@ -33,6 +40,7 @@
 		"vite.config.ts",
 		"src/types/global.d.ts",
 		"src/types/assets.d.ts",
-		"src/vite-plugin-eslint.d.ts"
+		"src/types/pwa.d.ts",
+		"src/types/vite-env.d.ts"
 	]
 }

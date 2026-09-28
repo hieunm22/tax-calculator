@@ -14,7 +14,7 @@ export default function useAutoTitle(titleKey: string) {
 			localStorage.setItem(LS_LANGUAGE, "vi")
 			i18n.changeLanguage("vi")
 		}
-	}, [])
+	}, [i18n])
 
 	useEffect(() => {
 		const setTranslatedTitle = () => {

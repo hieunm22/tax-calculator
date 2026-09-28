@@ -1,19 +1,10 @@
-import React, { createContext, useContext, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import { AlertFn, AlertModalProps, AlertRequest } from "./types"
+import { Dialog, DialogContent, DialogTitle } from "@mui/material"
 import { TButton, TSpan, TTypography } from "../TranslationTag"
-import { translate } from "locales/translate"
+import { AlertContext } from "./hooks"
+import { AlertFn, AlertModalProps, AlertRequest } from "./types"
 import "./AlertProvider.scss"
-import { Dialog, DialogContent, DialogTitle, Divider, Typography } from "@mui/material"
-import TranslationText from "../TranslationText"
-
-const AlertContext = createContext<AlertFn | null>(null)
-
-export const useAlert = (): AlertFn => {
-	const ctx = useContext(AlertContext)
-	if (!ctx) throw new Error("useAlert must be used inside <AlertProvider />")
-	return ctx
-}
 
 export const AlertProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [current, setCurrent] = useState<AlertRequest | null>(null)

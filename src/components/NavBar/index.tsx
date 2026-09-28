@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useEffect, useState } from "react"
+import { ChangeEvent, useState } from "react"
 import {
 	Box,
 	Button,
@@ -25,21 +25,11 @@ const Navbar = () => {
 	const { state, dispatch } = useToolkit()
 	useAutoTitle("home.header.label")
 
-	useEffect(() => {
-		if (open) {
-			const lang = localStorage.getItem(LS_LANGUAGE) || "vi"
-			changeLanguage(lang)
-		}
-	}, [open])
-
-	const showSettings = (_: MouseEvent<HTMLElement>) => {
+	const showSettings = () => {
+		const lang = localStorage.getItem(LS_LANGUAGE) || "vi"
+		changeLanguage(lang)
 		setOpen(true)
 	}
-
-	useEffect(() => {
-		const isDarkMode = localStorage.getItem(LS_DARKMODE) === "dark"
-		dispatch(setDarkMode(isDarkMode))
-	}, [])
 
 	const onChangeLanguage = (e: ChangeEvent<HTMLInputElement>) => {
 		changeLanguage(e.target.value)
@@ -73,7 +63,7 @@ const Navbar = () => {
 				</Button>
 			</div>
 			<Dialog open={open} onClose={handleClose}>
-				<DialogTitle padding="5px 20px !important" width={350}>
+				<DialogTitle sx={{ padding: "5px 20px !important", width: 350 }}>
 					{translate("setting.header.label")}
 				</DialogTitle>
 				<Divider sx={{ my: "5px" }} />

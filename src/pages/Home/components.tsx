@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import {
 	Box,
 	Dialog,
@@ -16,37 +15,19 @@ import {
 	TableRow,
 	Theme
 } from "@mui/material"
-import { TAX_CONFIGS, LS_LANGUAGE, LS_TAX_CONFIG } from "common/constants"
+import { TAX_CONFIGS } from "common/constants"
 import { TButton } from "components/TranslationTag"
 import { translate } from "locales/translate"
-import i18n from "locales/i18n"
 import useToolkit from "hooks/useToolkit"
 import { showPopup } from "toolkit/slice"
 import { formatNumber } from "common/helper"
-import { ContributionAmountProps, TaxConfig } from "./types"
+import { ContributionAmountProps, SettingsProps } from "./types"
 import NumberFormatField from "@/components/NumberFormatField"
 
-export const Settings = () => {
+export const Settings = (props: SettingsProps) => {
+	const { taxIndex } = props
 	const { state, dispatch } = useToolkit()
-	const [taxIndex, setTaxIndex] = useState<number>(1)
-	const [configData, setConfigData] = useState<TaxConfig>(TAX_CONFIGS[1])
-
-	useEffect(() => {
-		if (state.activePopup === 1) {
-			const lang = localStorage.getItem(LS_LANGUAGE) || "en"
-			i18n.changeLanguage(lang)
-
-			const taxConfigLS = localStorage.getItem(LS_TAX_CONFIG)
-			if (!taxConfigLS) {
-				localStorage.setItem(LS_TAX_CONFIG, "1")
-				setTaxIndex(1)
-				setConfigData(TAX_CONFIGS[1])
-			} else {
-				setConfigData(TAX_CONFIGS[+taxConfigLS])
-				setTaxIndex(+taxConfigLS)
-			}
-		}
-	}, [state.activePopup])
+	const configData = TAX_CONFIGS[taxIndex]
 
 	const handleClose = (_: any, reason: "backdropClick" | "escapeKeyDown") => {
 		if (reason === "escapeKeyDown") {
@@ -64,13 +45,16 @@ export const Settings = () => {
 			open={state.activePopup === 1}
 			onClose={handleClose}
 			sx={{
-				'& .MuiDialog-paper': {
+				"& .MuiDialog-paper": {
 					borderRadius: 3,
-					margin: "0 10px",
-				},
+					margin: "0 10px"
+				}
 			}}
 		>
-			<DialogTitle className="dialog-title" padding="5px 20px !important" width={350}>
+			<DialogTitle
+				className="dialog-title"
+				sx={{ padding: "5px 20px !important", width: 350 }}
+			>
 				{translate("config.policy.label" + (taxIndex + 1))}
 			</DialogTitle>
 			<Divider sx={{ my: "5px", overflowY: "scroll" }} />
@@ -78,36 +62,20 @@ export const Settings = () => {
 				<Box
 					sx={{
 						display: "grid",
-						gridTemplateColumns: "13fr 7fr",
+						gridTemplateColumns: "13fr 7fr"
 					}}
 				>
-					<Box sx={{ p: 1 }}>
-						{translate("config.personal-deduction.label")}
-					</Box>
-					<Box sx={sxValue}>
-						{formatNumber(configData.personalDeduction)} ₫
-					</Box>
+					<Box sx={{ p: 1 }}>{translate("config.personal-deduction.label")}</Box>
+					<Box sx={sxValue}>{formatNumber(configData.personalDeduction)} ₫</Box>
 
-					<Box sx={{ p: 1 }}>
-						{translate("config.dependants-deduction.label")}
-					</Box>
-					<Box sx={sxValue}>
-						{formatNumber(configData.dependantsDeduction)} ₫
-					</Box>
+					<Box sx={{ p: 1 }}>{translate("config.dependants-deduction.label")}</Box>
+					<Box sx={sxValue}>{formatNumber(configData.dependantsDeduction)} ₫</Box>
 
-					<Box sx={{ p: 1 }}>
-						{translate("config.minimum-insurance.label")}
-					</Box>
-					<Box sx={sxValue}>
-						{insuranceBase}
-					</Box>
+					<Box sx={{ p: 1 }}>{translate("config.minimum-insurance.label")}</Box>
+					<Box sx={sxValue}>{insuranceBase}</Box>
 
-					<Box sx={{ p: 1 }}>
-						{translate("config.insurance-rate.label")}
-					</Box>
-					<Box sx={sxValue}>
-						{insuranceRate}
-					</Box>
+					<Box sx={{ p: 1 }}>{translate("config.insurance-rate.label")}</Box>
+					<Box sx={sxValue}>{insuranceRate}</Box>
 				</Box>
 
 				<Box>
@@ -118,15 +86,21 @@ export const Settings = () => {
 								borderCollapse: "collapse",
 								"& th, & td": {
 									border: "1px solid",
-									borderColor: "divider",
-								},
+									borderColor: "divider"
+								}
 							}}
 						>
 							<TableHead>
 								<TableRow>
-									<TableCell align="center" width={100}>{translate("config.tax-level.label")}</TableCell>
-									<TableCell align="center" width={250}>{translate("config.tax-step.label")}</TableCell>
-									<TableCell align="center" width={180}>{translate("config.tax-rate.label")}</TableCell>
+									<TableCell align="center" width={100}>
+										{translate("config.tax-level.label")}
+									</TableCell>
+									<TableCell align="center" width={250}>
+										{translate("config.tax-step.label")}
+									</TableCell>
+									<TableCell align="center" width={180}>
+										{translate("config.tax-rate.label")}
+									</TableCell>
 								</TableRow>
 							</TableHead>
 
@@ -143,10 +117,12 @@ export const Settings = () => {
 					</TableContainer>
 				</Box>
 			</DialogContent>
-			<DialogActions sx={{
-				display: "flex",
-				justifyContent: "center"
-			}}>
+			<DialogActions
+				sx={{
+					display: "flex",
+					justifyContent: "center"
+				}}
+			>
 				<TButton
 					variant="outlined"
 					onClick={() => handleClose(null, "escapeKeyDown")}
@@ -161,35 +137,30 @@ export const ContributionAmountInput = (props: ContributionAmountProps) => {
 	const { formData, taxConfig, handleChange } = props
 
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: { xs: "column", sm: "row" },
-				justifyContent: "space-between",
-				gap: 2
-			}}
-		>
+		<Box>
 			<NumberFormatField
 				value={formData.contributionAmount}
 				label="home.contribution-amount.label"
-				placeholder={translate(
-					"home.contribution-amount.placeholder"
-				).formatWithNumber(taxConfig.minimumInsuranceBase)}
-				sx={{ mt: 2 }}
+				placeholder={translate("home.contribution-amount.placeholder").formatWithNumber(
+					taxConfig.minimumInsuranceBase
+				)}
+				sx={{ mt: 2, mr: 2 }}
 				disabled={formData.contributionLevel !== "other"}
-				end={<i className="far fa-dong-sign" />}
+				end={<i className="fas fa-dong-sign" />}
 				handleUpdate={handleChange("contributionAmount")}
 			/>
-			{formData.contributionLevel === "rate" && <NumberFormatField
-				value={formData.contributionRate}
-				label="home.contribution-level.rate-label"
-				placeholder="0 - 99%"
-				sx={{ mt: 2 }}
-				end={<i className="far fa-percent" />}
-				handleUpdate={handleChange("contributionRate")}
-				min={formData.contributionLevel === "rate" ? 0 : undefined}
-				max={formData.contributionLevel === "rate" ? 99 : undefined}
-			/>}
+			{formData.contributionLevel === "rate" && (
+				<NumberFormatField
+					value={formData.contributionRate}
+					label="home.contribution-level.rate-label"
+					placeholder="0 - 99%"
+					sx={{ mt: 2 }}
+					end={<i className="fas fa-percent" />}
+					handleUpdate={handleChange("contributionRate")}
+					min={formData.contributionLevel === "rate" ? 0 : undefined}
+					max={formData.contributionLevel === "rate" ? 99 : undefined}
+				/>
+			)}
 		</Box>
 	)
 }

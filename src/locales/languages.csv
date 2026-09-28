@@ -1,0 +1,42 @@
+Key,English,Vietnamese,Japanese,Korean,Chinese
+constant.is-required,is required,bắt buộc nhập,必須,필수 입력 항목,必填
+home.header.label,Personal tax calculator,Bảng tính thuế TNCN,個人所得税計算機,개인 소득세 스프레드시트,個人所得稅計算器
+home.income.label,Income,Thu nhập,収入,소득,收入
+home.income.placeholder,Enter income,Nhập thu nhập,収入を入力,소득 입력,輸入收入
+home.dependents.label,Dependents,Số người phụ thuộc,扶養家族,부양가족 수,受扶養人
+home.dependents.placeholder,Enter dependents,Nhập số người phụ thuộc,扶養家族を入力,부양가족 수 입력,輸入受扶養人
+home.contribution-level.label,Contribution level,Mức lương đóng bảo hiểm,拠出額,보험료 납부 수준,繳費等級
+home.contribution-level.official,On official salary,Trên lương chính thức,公務員給与,공무원 급여 초과,以正式工資計算
+home.contribution-level.rate,On official salary with rate,Trên tỷ lệ với lương chính thức,公式給与とレート,공식 급여 지급 기준,按官方薪資標準
+home.contribution-level.rate-label,Insurance amount rate,Tỷ lệ đóng bảo hiểm,保険金額率,보험금액 비율,保险金额费率
+home.contribution-level.other,Custom,Tuỳ chọn,オプション,옵션,选项
+home.contribution-amount.label,Contribution amount,Mức lương đóng bảo hiểm,拠出額,보험료 납부 수준,繳費金額
+home.contribution-amount.placeholder,At least {0}₫,Tối thiểu {0}₫,少なくとも{0}₫,최저 {0}₫,至少 {0}₫
+home.target-type.label,Target salary type,Lương cần tính,目標給与タイプ,계산할 급여,目標工資類型
+home.target-type.net,NET,NET,NET,순소득,淨收入
+home.target-type.gross,GROSS,GROSS,GROSS,총소득,總收入
+home.calculate-button.label,Calculate to {0},Tính lương {0},{0} に計算します,급여 {0} 계산,計算至 {0}
+home.alert.title,Salary and tax detail,Chi tiết lương và thuế,給与と税金の詳細,급여 및 세금 세부 정보,薪資和稅務詳情
+home.answer.row-1,Gross income is {0}₫,Thu nhập Gross của bạn là {0}₫,あなたの総収入は{0}₫です,총소득은 {0}₫입니다.,總收入為 {0}₫
+home.answer.row-2,Paid insurance is {0}₫,Mức bảo hiểm đã đóng là {0}₫,支払われた保険料は{0}₫です,납부한 보험료는 {0}₫입니다.,已繳保險費為 {0}₫
+home.answer.row-3,Before tax income is {0}₫,Thu nhập trước thuế là {0}₫,税引前所得は{0}₫です,세전 소득은 {0}₫입니다.,稅前收入為 {0}₫
+home.answer.row-4,Taxable income is {0}₫,Thu nhập tính thuế là {0}₫,課税所得は{0}₫です,과세 소득은 {0}₫입니다.,應稅所得為 {0}₫
+home.answer.row-5,Tax is {0}₫,Số thuế phải đóng là {0}₫,納税額は{0}₫です,납부할 세액은 {0}₫입니다.,稅額為 {0}₫
+home.answer.row-6,Net income is {0}₫,Thu nhập Net của bạn là {0}₫,純利益は{0}₫です,순소득은 {0}₫입니다.,淨收入為 {0}₫
+setting.header.label,Setting,Cài đặt,設定,설정,設定
+setting.language.label,Language,Ngôn ngữ,言語,언어,語言
+setting.darkmode.label,Dark mode,Chế độ tối,ダークモード,다크 모드,深色模式
+setting.btn-close.label,Close,Đóng,閉じる,닫기,關閉
+config.personal-deduction.label,Personal deduction,Giảm trừ cá nhân,個人控除,개인 공제,個人扣除額
+config.dependants-deduction.label,Dependants deduction,Giảm trừ người phụ thuộc,扶養控除,부양가족 공제,受扶養人扣除額
+config.insurance-rate.label,Insurance rate,Tỷ lệ đóng bảo hiểm,保険料率,보험료 납부율,保險費率
+config.minimum-insurance.label,Minimum insurance base,Mức lương tối thiểu,最低保険基盤,최저 급여,最低保險基數
+config.policy.label,PIT Policy,Chính sách thuế TNCN,個人所得税政策,개인소득세 정책,個人所得稅政策
+config.policy.label1,Law No. 04/2007/QH12,Luật số 04/2007/QH12,법률 제04/2007/QH12호,법률 제04/2007/QH12호,04/2007/QH12 號 法律
+config.policy.label2,Resolution 954/2020/UBTVQH14,Nghị quyết 954/2020/UBTVQH14,決議954/2020/UBTVQH14,결의안 954/2020/UBTVQH14,第 954/2020/UBTVQH14 號決議
+config.policy.label3,Resolution 110/2025/UBTVQH15,Nghị quyết 110/2025/UBTVQH15,決議110/2025/UBTVQH15,결의안 110/2025/UBTVQH15,第 110/2025/UBTVQH15 號決議
+config.policy.tooltip,Tax policy detail,Chi tiết chính sách thuế,税制の詳細,세금 정책 세부 정보,稅收政策詳情
+config.tax-level.label,Tax level,Bậc,税率,세금 수준,稅級
+config.tax-step.label,Tax step,Biểu thuế,税金のステップ,세금 단계,稅階
+config.tax-rate.label,Tax rate,Tỷ suất thuế,税率,세율,稅率
+config.close.label,Close,Đóng,閉じる,닫기,關閉

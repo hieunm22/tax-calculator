@@ -1,10 +1,10 @@
-/* eslint-disable max-lines, max-len */
 import { ReduxState } from "types/ReduxState"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { LS_DARKMODE } from "common/constants"
 
 const initialState: ReduxState = {
 	activePopup: 0,
-	darkMode: false,
+	darkMode: localStorage.getItem(LS_DARKMODE) === "dark",
 	lang: "en"
 }
 

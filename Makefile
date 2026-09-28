@@ -16,7 +16,7 @@ destroy:
 
 docker:
 	docker build -t tax -f Dockerfile .
-	docker run --name tax -ditp 5555:80 --restart unless-stopped tax
+	docker run --name tax -ditp 3001:80 --restart unless-stopped tax
 	rm -rf dist
 
 publish:

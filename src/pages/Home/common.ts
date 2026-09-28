@@ -2,7 +2,6 @@ import { TaxConfig, TaxStep } from "./types"
 
 export function calcTaxInNet(taxableIncome: number, config: TaxConfig): number {
 	let remaining = taxableIncome
-	let rate = 0
 	let tax = 0
 	let previousMax = 0
 
@@ -11,7 +10,6 @@ export function calcTaxInNet(taxableIncome: number, config: TaxConfig): number {
 
 		const taxableAtThisRate = Math.min(remaining, step.max - previousMax)
 		tax += taxableAtThisRate * step.rate
-		rate = step.rate
 
 		remaining -= taxableAtThisRate
 		previousMax = step.max
